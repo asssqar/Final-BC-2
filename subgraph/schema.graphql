@@ -1,0 +1,74 @@
+# Aetheria subgraph schema (≥ 4 entities, supports ≥ 5 documented queries — see README).
+
+type Player @entity(immutable: false) {
+    id: ID!                    # = checksum(player address)
+    address: Bytes!
+    totalCrafted: BigInt!
+    totalLootBoxes: BigInt!
+    totalRented: BigInt!
+    rentalsListed: BigInt!
+    holdings: [Holding!]! @derivedFrom(field: "player")
+}
+
+type Holding @entity(immutable: false) {
+    id: ID!                    # = playerAddress-itemId
+    player: Player!
+    itemId: BigInt!
+    balance: BigInt!
+    lastUpdated: BigInt!
+}
+
+type Recipe @entity(immutable: false) {
+    id: ID!                    # = recipeId
+    outputId: BigInt!
+    outputAmount: BigInt!
+    craftFee: BigInt!
+    active: Boolean!
+    timesCrafted: BigInt!
+    lastUpdated: BigInt!
+}
+
+type CraftEvent @entity(immutable: true) {
+    id: Bytes!                 # = txHash-logIdx
+    player: Player!
+    recipe: Recipe!
+    outputId: BigInt!
+    outputAmount: BigInt!
+    timestamp: BigInt!
+    txHash: Bytes!
+}
+
+type Swap @entity(immutable: true) {
+    id: Bytes!
+    sender: Bytes!
+    to: Bytes!
+    tokenIn: Bytes!
+    amountIn: BigInt!
+    amountOut: BigInt!
+    timestamp: BigInt!
+    txHash: Bytes!
+}
+
+type Proposal @entity(immutable: false) {
+    id: ID!                    # = proposalId
+    proposer: Bytes!
+    description: String!
+    state: String!             # enum string
+    forVotes: BigInt!
+    againstVotes: BigInt!
+    abstainVotes: BigInt!
+    startTime: BigInt!
+    endTime: BigInt!
+    createdAt: BigInt!
+}
+
+type LootBoxOpen @entity(immutable: false) {
+    id: ID!                    # = requestId
+    player: Player!
+    requestId: BigInt!
+    fulfilled: Boolean!
+    rewardItemId: BigInt
+    rewardAmount: BigInt
+    openedAt: BigInt!
+    fulfilledAt: BigInt
+}

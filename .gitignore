@@ -1,0 +1,33 @@
+# Foundry
+contracts/out/
+contracts/cache/
+contracts/broadcast/*/dry-run/
+contracts/lib/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+.turbo/
+dist/
+build/
+*.tsbuildinfo
+
+# Subgraph build artifacts
+subgraph/build/
+subgraph/generated/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Coverage / artifacts
+coverage/
+lcov.info
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

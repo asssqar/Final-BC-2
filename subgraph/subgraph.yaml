@@ -1,0 +1,111 @@
+specVersion: 1.0.0
+description: Aetheria GameFi protocol subgraph (Items, AMM, Governor, LootBox)
+repository: https://github.com/aetheria/aetheria
+schema:
+  file: ./schema.graphql
+features:
+  - nonFatalErrors
+dataSources:
+  - kind: ethereum/contract
+    name: GameItems
+    network: arbitrum-sepolia
+    source:
+      address: "0x0000000000000000000000000000000000000000" # filled at deploy time
+      abi: GameItems
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      file: ./src/gameItems.ts
+      entities:
+        - Player
+        - Holding
+        - Recipe
+        - CraftEvent
+      abis:
+        - name: GameItems
+          file: ./abis/GameItems.json
+      eventHandlers:
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: RecipeSet(indexed uint256,uint256,uint256,uint256)
+          handler: handleRecipeSet
+        - event: RecipeRemoved(indexed uint256)
+          handler: handleRecipeRemoved
+        - event: Crafted(indexed address,indexed uint256,uint256,uint256)
+          handler: handleCrafted
+
+  - kind: ethereum/contract
+    name: ResourceAMM
+    network: arbitrum-sepolia
+    source:
+      address: "0x0000000000000000000000000000000000000000"
+      abi: ResourceAMM
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      file: ./src/amm.ts
+      entities:
+        - Swap
+      abis:
+        - name: ResourceAMM
+          file: ./abis/ResourceAMM.json
+      eventHandlers:
+        - event: Swap(indexed address,indexed address,address,uint256,uint256)
+          handler: handleSwap
+
+  - kind: ethereum/contract
+    name: GameGovernor
+    network: arbitrum-sepolia
+    source:
+      address: "0x0000000000000000000000000000000000000000"
+      abi: GameGovernor
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      file: ./src/governor.ts
+      entities:
+        - Proposal
+      abis:
+        - name: GameGovernor
+          file: ./abis/GameGovernor.json
+      eventHandlers:
+        - event: ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)
+          handler: handleProposalCreated
+        - event: ProposalExecuted(uint256)
+          handler: handleProposalExecuted
+        - event: ProposalCanceled(uint256)
+          handler: handleProposalCanceled
+        - event: VoteCast(indexed address,uint256,uint8,uint256,string)
+          handler: handleVoteCast
+
+  - kind: ethereum/contract
+    name: LootBox
+    network: arbitrum-sepolia
+    source:
+      address: "0x0000000000000000000000000000000000000000"
+      abi: LootBox
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      file: ./src/lootBox.ts
+      entities:
+        - LootBoxOpen
+        - Player
+      abis:
+        - name: LootBox
+          file: ./abis/LootBox.json
+      eventHandlers:
+        - event: LootBoxOpened(indexed address,indexed uint256)
+          handler: handleOpened
+        - event: LootBoxFulfilled(indexed address,indexed uint256,uint256,uint256)
+          handler: handleFulfilled
