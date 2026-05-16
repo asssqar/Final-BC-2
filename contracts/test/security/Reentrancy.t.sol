@@ -84,24 +84,35 @@ contract ReentrancyTest is Test {
     }
 
     function test_reentrancyDefended_byNonReentrantGuard() public {
-        // Pretend the malicious receiver is a smart-contract item owner.
-        MaliciousReceiver mal = new MaliciousReceiver(rental, address(token), address(items), 5_000, 2);
-        items.mint(address(mal), 5_000, 4, "");
+        // Set up a legitimate owner who lists items for rental.
+        address owner = address(0xC0DE);
+        items.mint(owner, 5_000, 4, "");
+        vm.startPrank(owner);
+        items.setApprovalForAll(address(rental), true);
+        rental.list(address(items), 5_000, 2, address(token), 1, 60, 7 days);
+        vm.stopPrank();
 
+        // The malicious receiver acts as renter. When rental.rent() transfers items TO mal,
+        // it triggers mal.onERC1155Received, which tries to re-enter rental.list().
+        // The nonReentrant guard must block that re-entry.
+        MaliciousReceiver mal = new MaliciousReceiver(rental, address(token), address(items), 5_000, 2);
+        items.mint(address(mal), 5_000, 4, ""); // mal needs items to (attempt to) list
         vm.prank(address(mal));
         items.setApprovalForAll(address(rental), true);
 
-        // The receiver doesn't call list itself — but if it did, the nonReentrant guard would
-        // stop the re-entry from inside the ERC1155 hook. We simulate that by using a wrapping
-        // call: arm + invoke-from-receiver.
+        // Fund mal with enough tokens to pay for the rent.
+        deal(address(token), address(mal), 1_000e18);
+        vm.prank(address(mal));
+        token.approve(address(rental), type(uint256).max);
+
         mal.arm();
 
         vm.prank(address(mal));
-        rental.list(address(items), 5_000, 2, address(token), 1, 60, 7 days);
+        rental.rent(0, 60); // triggers safeTransferFrom(vault → mal) → mal.onERC1155Received fires
 
         assertEq(mal.reentered(), true, "hook fired");
-        // The reentry attempt must NOT have succeeded — listing 0 created.
-        // nextListingId increments to 1 (only the outer list succeeded).
+        // The reentry attempt must NOT have succeeded — only listing 0 existed before rent.
+        // nextListingId is still 1 (mal's re-entry list call was blocked).
         assertEq(rental.nextListingId(), 1);
     }
 }

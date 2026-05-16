@@ -14,6 +14,7 @@ contract VaultHandler is Test {
     constructor(YieldVault _v, GameToken _t) {
         vault = _v;
         token = _t;
+        deal(address(_t), address(this), 1_000_000e18);
         token.transfer(actor, 1_000_000e18);
         vm.prank(actor);
         token.approve(address(vault), type(uint256).max);

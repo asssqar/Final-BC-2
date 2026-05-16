@@ -37,7 +37,7 @@ contract GameTokenUnitTest is Test {
     function test_mint_revertsAtCap() public {
         vm.prank(admin);
         vm.expectRevert(abi.encodeWithSelector(GameToken.CapExceeded.selector, 100_000_001e18, 100_000_000e18));
-        token.mint(user, 99_999_002e18);
+        token.mint(user, 99_999_001e18);
     }
 
     function test_burn_reducesSupply() public {
@@ -80,8 +80,9 @@ contract GameTokenUnitTest is Test {
     }
 
     function test_revokeMinter() public {
+        bytes32 minterRole = token.MINTER_ROLE();
         vm.prank(admin);
-        token.revokeRole(token.MINTER_ROLE(), admin);
+        token.revokeRole(minterRole, admin);
         vm.prank(admin);
         vm.expectRevert();
         token.mint(user, 1);
@@ -93,6 +94,6 @@ contract GameTokenUnitTest is Test {
         vm.warp(block.timestamp + 100);
         uint256 ts = block.timestamp;
         vm.warp(ts + 1);
-        assertEq(token.getPastVotes(admin, ts), 1_000e18);
+        assertEq(token.getPastVotes(admin, ts - 1), 1_000e18);
     }
 }

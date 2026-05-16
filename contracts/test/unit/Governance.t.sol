@@ -6,6 +6,7 @@ import {TimelockController} from "@openzeppelin/contracts/governance/TimelockCon
 import {IVotes} from "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import {IGovernor} from "@openzeppelin/contracts/governance/IGovernor.sol";
 
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {GameToken} from "../../src/tokens/GameToken.sol";
 import {GameGovernor} from "../../src/governance/GameGovernor.sol";
 
@@ -44,7 +45,7 @@ contract GovernanceUnitTest is Test {
         targets[0] = address(token);
         uint256[] memory values = new uint256[](1);
         bytes[] memory cds = new bytes[](1);
-        cds[0] = abi.encodeCall(GameToken.transfer, (address(0xdead), 1));
+        cds[0] = abi.encodeCall(IERC20.transfer, (address(0xdead), 1));
         string memory description = "test proposal";
 
         // Voter proposes.
@@ -71,6 +72,7 @@ contract GovernanceUnitTest is Test {
         vm.warp(block.timestamp + 2 days + 1);
 
         // Need timelock to actually be able to send token.transfer — give it tokens first
+        vm.prank(voter);
         token.transfer(address(timelock), 1);
         governor.execute(targets, values, cds, descHash);
         assertEq(uint8(governor.state(id)), uint8(IGovernor.ProposalState.Executed));
@@ -78,6 +80,7 @@ contract GovernanceUnitTest is Test {
 
     function test_proposalThreshold_notMet_reverts() public {
         address poor = address(0xB0B);
+        vm.prank(voter);
         token.transfer(poor, 100);
         vm.prank(poor);
         token.delegate(poor);
@@ -87,7 +90,7 @@ contract GovernanceUnitTest is Test {
         targets[0] = address(token);
         uint256[] memory values = new uint256[](1);
         bytes[] memory cds = new bytes[](1);
-        cds[0] = abi.encodeCall(GameToken.transfer, (address(0xdead), 1));
+        cds[0] = abi.encodeCall(IERC20.transfer, (address(0xdead), 1));
 
         vm.prank(poor);
         vm.expectRevert();

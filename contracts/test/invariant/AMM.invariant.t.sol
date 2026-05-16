@@ -17,6 +17,8 @@ contract AMMHandler is Test {
         amm = _amm;
         a = _a;
         b = _b;
+        deal(address(a), address(this), 1_000_000e18);
+        deal(address(b), address(this), 1_000_000e18);
         a.transfer(actor, 1_000_000e18);
         b.transfer(actor, 1_000_000e18);
         vm.startPrank(actor);

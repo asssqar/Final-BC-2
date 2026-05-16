@@ -1,0 +1,26 @@
+{
+  "lib\\chainlink": {
+    "tag": {
+      "name": "v2.13.0",
+      "rev": "a1235ade8c5f8fd031b003be8b678a1b5ad69c09"
+    }
+  },
+  "lib\\forge-std": {
+    "tag": {
+      "name": "v1.9.3",
+      "rev": "8f24d6b04c92975e0795b5868aa0d783251cdeaa"
+    }
+  },
+  "lib\\openzeppelin-contracts": {
+    "tag": {
+      "name": "v5.0.2",
+      "rev": "dbb6104ce834628e473d2173bbc9d47f81a9eec3"
+    }
+  },
+  "lib\\openzeppelin-contracts-upgradeable": {
+    "tag": {
+      "name": "v5.0.2",
+      "rev": "723f8cab09cdae1aca9ec9cc1cfa040c2d4b06c1"
+    }
+  }
+}

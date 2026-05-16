@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC1155} from "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import {IERC1155Receiver} from "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
-import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
-import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
@@ -21,7 +20,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 ///        `claimPayout` — eliminates failed-callback DoS attacks.
 ///      - State machine per listing: Listed → Rented → Listed (or Cancelled).
 ///      - CEI: external token transfers happen after listing/rental state updates.
-contract RentalVault is AccessControl, Pausable, ReentrancyGuard, IERC1155Receiver, ERC165 {
+contract RentalVault is AccessControl, Pausable, ReentrancyGuard, ERC1155Holder {
     using SafeERC20 for IERC20;
 
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
@@ -182,8 +181,8 @@ contract RentalVault is AccessControl, Pausable, ReentrancyGuard, IERC1155Receiv
         l.startTime = 0;
         l.endTime = 0;
 
-        // Best-effort pull back. Reverts if renter has not approved → owner can re-approve flow.
-        IERC1155(l.itemContract).safeTransferFrom(renter, l.owner, itemId, amount, "");
+        // Pull items back into escrow so the listing can be rented again.
+        IERC1155(l.itemContract).safeTransferFrom(renter, address(this), itemId, amount, "");
         emit RentalEnded(listingId);
     }
 
@@ -227,8 +226,8 @@ contract RentalVault is AccessControl, Pausable, ReentrancyGuard, IERC1155Receiv
     // ERC1155Receiver
     // -----------------------------------------------------------------------
 
-    function onERC1155Received(address, address, uint256, uint256, bytes calldata)
-        external
+    function onERC1155Received(address, address, uint256, uint256, bytes memory)
+        public
         pure
         override
         returns (bytes4)
@@ -236,8 +235,8 @@ contract RentalVault is AccessControl, Pausable, ReentrancyGuard, IERC1155Receiv
         return IERC1155Receiver.onERC1155Received.selector;
     }
 
-    function onERC1155BatchReceived(address, address, uint256[] calldata, uint256[] calldata, bytes calldata)
-        external
+    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory)
+        public
         pure
         override
         returns (bytes4)
@@ -248,11 +247,11 @@ contract RentalVault is AccessControl, Pausable, ReentrancyGuard, IERC1155Receiv
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        override(AccessControl, ERC165, IERC165)
+        override(AccessControl, ERC1155Holder)
         returns (bool)
     {
         return interfaceId == type(IERC1155Receiver).interfaceId
             || AccessControl.supportsInterface(interfaceId)
-            || ERC165.supportsInterface(interfaceId);
+            || ERC1155Holder.supportsInterface(interfaceId);
     }
 }
