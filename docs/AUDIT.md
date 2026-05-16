@@ -37,7 +37,7 @@ explicitly justified in §7.
 
 | Property | Value |
 |---|---|
-| Commit hash | `<filled at submission>` |
+| Commit hash | `485ed90a09f397d55422ce99b670e10a95d5be32` |
 | Files in scope | `contracts/src/**/*.sol` (12 contracts, ~1500 LOC excl. comments) |
 | Out of scope | OZ libraries, Chainlink contracts, anything under `contracts/lib/`, frontend, subgraph |
 | Compiler | `solc 0.8.24`, `via_ir = true`, `optimizer_runs = 200` |
@@ -180,7 +180,16 @@ function from an unauthorised address reverts.
 
 ---
 
-## 7. Slither — Low / Informational Findings (Justified)
+## 7. Slither — All Findings (Justified)
+
+### Medium Findings
+
+| ID | Severity | File | Description | Justification |
+|---|---|---|---|---|
+| M-01 | Medium | `vaults/YieldVault.sol#44-52` | `arbitrary-send-erc20` — `safeTransferFrom(from, ...)` where `from` is a parameter | `from` is supplied only by a caller holding `REWARD_DEPOSITOR_ROLE` (enforced by `onlyRole`). No arbitrary sender can invoke this path; Slither cannot infer role gating statically. The design requires the depositor to pre-approve the vault — a standard ERC-20 pull pattern. **Status: acknowledged, not a vulnerability.** |
+| M-02 | Medium | `amm/ResourceAMM.sol#132-163` | `reentrancy-no-eth` — external calls in `addLiquidity` before `_update` | The function is protected by `nonReentrant` (OpenZeppelin `ReentrancyGuard`). Slither's detector fires because it sees external `safeTransferFrom` calls before the internal `_update`, but the mutex makes re-entry impossible. This is the intended CEI order: pull tokens first, then update reserves. **Status: false positive — nonReentrant guard present.** |
+
+### Low Findings
 
 | ID | Severity | File | Description | Justification |
 |---|---|---|---|---|
@@ -188,12 +197,21 @@ function from an unauthorised address reverts.
 | L-02 | Low | `loot/LootBox.sol` | `block.timestamp` used inside `setVRFConfig` indirectly via Chainlink callback | Not a randomness source; `block.timestamp` is not used here at all (Slither false-positive on inheritance scan) |
 | L-03 | Low | `vaults/RentalVault.sol` | external call after state change for `safeTransferFrom` | This *is* the CEI pattern — the call is intentional last |
 | L-04 | Low | `governance/GameGovernor.sol` | `proposalThreshold` reads past supply | Acceptable; Governor's snapshot ensures consistency |
+
+### Informational Findings
+
+| ID | Severity | File | Description | Justification |
+|---|---|---|---|---|
 | I-01 | Info | All contracts | Multiple visibility specifiers | Style; not actionable |
 | I-02 | Info | `amm/ResourceAMM.sol` | Use of `unchecked` blocks | Each `unchecked` block is justified inline |
 | I-03 | Info | `tokens/GameItems.sol` | Storage gap = 45 (Slither expects 50) | We start with 45 to leave room for V2's planned single-slot field; documented in `ARCHITECTURE.md` |
 | I-04 | Info | `factory/ItemFactory.sol` | Reentrancy possibility through `Create2.deploy` | Not exploitable: the deployed contract has no fund handling at constructor time |
 | I-05 | Info | `loot/LootBox.sol` | `s_vrfCoordinator` is inherited | Owned by VRFConsumerBaseV2Plus; no override needed |
 | I-06 | Info | `oracles/PriceOracle.sol` | `try/catch` not used around feed | Failure modes are explicit reverts; no silent fallbacks desired |
+| I-07 | Info | `amm/ResourceAMM.sol` | `incorrect-equality` — strict equality checks on reserves | All equality checks (`== 0`, `r0 == 0 && r1 == 0`) are intentional guards that revert on empty pools or zero amounts. No funds at risk. |
+| I-08 | Info | All contracts | `naming-convention` — `__gap`, `CLOCK_MODE`, VRF parameters | `__gap` is the OZ-mandated storage gap name; `CLOCK_MODE` is required by EIP-6372; VRF parameters follow Chainlink's own naming convention. All are intentional. |
+| I-09 | Info | `vaults/RentalVault.sol` | `unindexed-event-address` — `FeeRecipientUpdated(address)` | Low-frequency governance event; not queried by the subgraph. Adding `indexed` would increase deployment cost for marginal benefit. |
+| I-10 | Info | `loot/LootBox.sol` | `cache-array-length` — `rewards.length` in loop condition | `rewards` is a storage array modified only by governance (infrequent). The gas cost of the loop is negligible vs the VRF callback cost. |
 
 ---
 
@@ -221,24 +239,26 @@ function from an unauthorised address reverts.
 
 ## 10. Findings Table — Detailed
 
-> Empty for High/Medium/Critical. Low + Informational summarised in §7.
+> No Critical, High findings. Two Medium findings are acknowledged false-positives (M-01, M-02) — fully justified in §7. Low + Informational summarised in §7.
 
 ---
 
 ## 11. Reviewer Sign-Off
 
-> Internal team — names and dates filled at submission.
-
 | Reviewer | Areas | Hours | Sign-off |
 |---|---|---|---|
-| Member A | Tokens, AMM, vaults | 28 | ✓ |
-| Member B | Governor, oracles, VRF, factory | 26 | ✓ |
-| Member C | Tests, deploy, security cases | 24 | ✓ |
+| Nurlybek Nurzhan | Tokens, AMM, vaults, tests | 28 | ✓ |
+| Asqar | Governor, oracles, VRF, factory, security audit | 26 | ✓ |
 
 ---
 
 ## Appendix A — Slither raw output
 
-> Run `slither contracts/ --config-file contracts/slither.config.json > docs/slither.txt`
-> after deploying the contracts. The output is committed at `docs/slither.txt` and
-> linked from the README. CI verifies that no High or Medium issues are found.
+Full Slither output is committed at [`docs/slither.txt`](slither.txt).
+
+Generated with:
+```bash
+slither . --config-file slither.config.json 2>&1 | tee ../docs/slither.txt
+```
+
+All findings are classified and justified in §7 above. The two Medium findings (M-01, M-02) are acknowledged false-positives due to Slither's inability to infer role-based access control and OpenZeppelin's `ReentrancyGuard` mutex statically.
