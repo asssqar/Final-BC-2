@@ -52,3 +52,5 @@ base_sepolia = { key = "${BASESCAN_API_KEY}", chain = 84532 }
 [profile.coverage]
 via_ir = true
 
+[profile.default]
+coverage_no_match = ["script/**", "src/libs/YulMath.sol"]
