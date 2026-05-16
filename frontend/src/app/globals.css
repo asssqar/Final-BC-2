@@ -7,7 +7,7 @@ body {
 }
 
 .card {
-    @apply rounded-2xl bg-white shadow-sm border border-aether-100 p-6;
+    @apply rounded-2xl bg-white shadow-sm border border-gray-200 p-6;
 }
 
 .btn {
