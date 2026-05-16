@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
-import {VRFConsumerBaseV2Plus} from "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
+import {
+    VRFConsumerBaseV2Plus
+} from "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
 import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
@@ -51,7 +53,9 @@ contract LootBox is VRFConsumerBaseV2Plus, AccessControl, ReentrancyGuard, Pausa
     mapping(uint256 requestId => PendingRequest) public requests;
 
     event LootBoxOpened(address indexed player, uint256 indexed requestId);
-    event LootBoxFulfilled(address indexed player, uint256 indexed requestId, uint256 itemId, uint256 amount);
+    event LootBoxFulfilled(
+        address indexed player, uint256 indexed requestId, uint256 itemId, uint256 amount
+    );
     event RewardsUpdated();
     event KeyItemUpdated(uint256 itemId, uint256 amount);
     event VRFConfigUpdated(bytes32 keyHash, uint256 subId, uint16 confirmations, uint32 gasLimit);
@@ -82,12 +86,7 @@ contract LootBox is VRFConsumerBaseV2Plus, AccessControl, ReentrancyGuard, Pausa
 
     /// @notice Burn the configured key (if any) and request a random reward via Chainlink VRF.
     /// @return requestId Subgraph clients can correlate this with the eventual fulfillment.
-    function openLootBox()
-        external
-        nonReentrant
-        whenNotPaused
-        returns (uint256 requestId)
-    {
+    function openLootBox() external nonReentrant whenNotPaused returns (uint256 requestId) {
         if (rewards.length == 0 || totalWeight == 0) revert NoRewards();
         if (keyItemAmount > 0) {
             uint256 bal = gameItems.balanceOf(msg.sender, keyItemId);
@@ -101,7 +100,9 @@ contract LootBox is VRFConsumerBaseV2Plus, AccessControl, ReentrancyGuard, Pausa
             requestConfirmations: requestConfirmations,
             callbackGasLimit: callbackGasLimit,
             numWords: NUM_WORDS,
-            extraArgs: VRFV2PlusClient._argsToBytes(VRFV2PlusClient.ExtraArgsV1({nativePayment: false}))
+            extraArgs: VRFV2PlusClient._argsToBytes(
+                VRFV2PlusClient.ExtraArgsV1({nativePayment: false})
+            )
         });
         requestId = s_vrfCoordinator.requestRandomWords(req);
         requests[requestId] = PendingRequest({player: msg.sender, fulfilled: false});
@@ -110,7 +111,10 @@ contract LootBox is VRFConsumerBaseV2Plus, AccessControl, ReentrancyGuard, Pausa
 
     /// @notice Coordinator callback. Picks a weighted-random reward and mints it.
     /// @dev `gameItems.mint` requires this contract to hold MINTER_ROLE on GameItems.
-    function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords) internal override {
+    function fulfillRandomWords(uint256 requestId, uint256[] calldata randomWords)
+        internal
+        override
+    {
         PendingRequest storage r = requests[requestId];
         if (r.fulfilled) revert AlreadyFulfilled();
         r.fulfilled = true;

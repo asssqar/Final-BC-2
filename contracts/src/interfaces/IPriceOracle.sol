@@ -9,7 +9,10 @@ interface IPriceOracle {
     /// @notice Returns the latest price scaled to 1e18 along with the source feed timestamp.
     /// @dev Reverts if the feed is stale (older than the configured staleness window) or if the
     ///      reported price is non-positive.
-    function getLatestPrice(address asset) external view returns (uint256 priceWad, uint256 updatedAt);
+    function getLatestPrice(address asset)
+        external
+        view
+        returns (uint256 priceWad, uint256 updatedAt);
 
     /// @notice Returns the configured staleness window for `asset`, in seconds.
     function stalenessWindow(address asset) external view returns (uint256);

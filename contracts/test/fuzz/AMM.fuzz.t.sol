@@ -19,7 +19,7 @@ contract AMMFuzzTest is Test {
         amm = new ResourceAMM(IERC20(address(a)), IERC20(address(b)));
         a.approve(address(amm), type(uint256).max);
         b.approve(address(amm), type(uint256).max);
-        amm.addLiquidity(1_000e18, 1_000e18, 0, 0, owner);
+        amm.addLiquidity(1000e18, 1000e18, 0, 0, owner);
 
         a.transfer(trader, 100_000e18);
         b.transfer(trader, 100_000e18);
@@ -46,8 +46,8 @@ contract AMMFuzzTest is Test {
     }
 
     function testFuzz_addLiquidity_returnsLP(uint256 ax, uint256 bx) public {
-        ax = bound(ax, 1e15, 1_000e18);
-        bx = bound(bx, 1e15, 1_000e18);
+        ax = bound(ax, 1e15, 1000e18);
+        bx = bound(bx, 1e15, 1000e18);
         (uint112 r0, uint112 r1,) = amm.getReserves();
         // Match ratio so the optimal computation does not revert on slippage.
         uint256 bxOptimal = ax * uint256(r1) / uint256(r0);
@@ -60,13 +60,13 @@ contract AMMFuzzTest is Test {
 
     function testFuzz_quote_isMonotonic(uint256 amtA) public view {
         amtA = bound(amtA, 1, 1_000_000e18);
-        uint256 q = amm.quote(amtA, 1_000e18, 2_000e18);
+        uint256 q = amm.quote(amtA, 1000e18, 2000e18);
         assertEq(q, amtA * 2);
     }
 
     function testFuzz_getAmountOut_neverExceedsReserves(uint256 amtIn) public view {
         amtIn = bound(amtIn, 1, 100_000e18);
-        uint256 out = amm.getAmountOut(amtIn, 1_000e18, 1_000e18);
-        assertLt(out, 1_000e18);
+        uint256 out = amm.getAmountOut(amtIn, 1000e18, 1000e18);
+        assertLt(out, 1000e18);
     }
 }

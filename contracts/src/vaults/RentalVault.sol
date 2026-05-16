@@ -51,7 +51,7 @@ contract RentalVault is AccessControl, Pausable, ReentrancyGuard, ERC1155Holder 
 
     /// @notice Protocol fee in basis points taken from rental payments and routed to `feeRecipient`.
     uint256 public protocolFeeBps; // governance-tunable; capped at 1_000 (10%)
-    uint256 public constant MAX_FEE_BPS = 1_000;
+    uint256 public constant MAX_FEE_BPS = 1000;
     address public feeRecipient;
 
     uint256 public nextListingId;
@@ -60,7 +60,13 @@ contract RentalVault is AccessControl, Pausable, ReentrancyGuard, ERC1155Holder 
     /// @notice Pull-over-push accounting: holder => payToken => claimable amount.
     mapping(address holder => mapping(address payToken => uint256)) public payoutOf;
 
-    event Listed(uint256 indexed listingId, address indexed owner, address itemContract, uint256 itemId, uint256 amount);
+    event Listed(
+        uint256 indexed listingId,
+        address indexed owner,
+        address itemContract,
+        uint256 itemId,
+        uint256 amount
+    );
     event Cancelled(uint256 indexed listingId);
     event Rented(uint256 indexed listingId, address indexed renter, uint64 endTime, uint256 paid);
     event RentalEnded(uint256 indexed listingId);
@@ -135,11 +141,7 @@ contract RentalVault is AccessControl, Pausable, ReentrancyGuard, ERC1155Holder 
     }
 
     /// @notice Rent a listed item for `duration` seconds, paying `pricePerSecond * duration`.
-    function rent(uint256 listingId, uint64 duration)
-        external
-        whenNotPaused
-        nonReentrant
-    {
+    function rent(uint256 listingId, uint64 duration) external whenNotPaused nonReentrant {
         Listing storage l = listings[listingId];
         if (l.status != Status.Listed) revert InvalidStatus();
         if (duration < l.minDuration || duration > l.maxDuration) revert InvalidDuration();
@@ -235,12 +237,13 @@ contract RentalVault is AccessControl, Pausable, ReentrancyGuard, ERC1155Holder 
         return IERC1155Receiver.onERC1155Received.selector;
     }
 
-    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory)
-        public
-        pure
-        override
-        returns (bytes4)
-    {
+    function onERC1155BatchReceived(
+        address,
+        address,
+        uint256[] memory,
+        uint256[] memory,
+        bytes memory
+    ) public pure override returns (bytes4) {
         return IERC1155Receiver.onERC1155BatchReceived.selector;
     }
 

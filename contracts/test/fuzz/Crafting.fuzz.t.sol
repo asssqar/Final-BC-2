@@ -12,17 +12,23 @@ contract CraftingFuzzTest is Test {
 
     function setUp() public {
         GameItems impl = new GameItems();
-        items = GameItems(address(new ERC1967Proxy(
-            address(impl),
-            abi.encodeCall(GameItems.initialize, (admin, "ipfs://t/{id}.json"))
-        )));
+        items = GameItems(
+            address(
+                new ERC1967Proxy(
+                    address(impl),
+                    abi.encodeCall(GameItems.initialize, (admin, "ipfs://t/{id}.json"))
+                )
+            )
+        );
         items.grantRole(items.MINTER_ROLE(), admin);
 
         uint256[] memory ids = new uint256[](2);
-        ids[0] = 1; ids[1] = 2;
+        ids[0] = 1;
+        ids[1] = 2;
         uint256[] memory amts = new uint256[](2);
-        amts[0] = 2; amts[1] = 1;
-        items.setRecipe(1, ids, amts, 1_000, 1, 0);
+        amts[0] = 2;
+        amts[1] = 1;
+        items.setRecipe(1, ids, amts, 1000, 1, 0);
     }
 
     function testFuzz_craftBurnsAndMintsCorrectly(uint16 multiplier) public {
@@ -35,7 +41,7 @@ contract CraftingFuzzTest is Test {
         items.craft(1, multiplier);
         assertEq(items.balanceOf(alice, 1), 0);
         assertEq(items.balanceOf(alice, 2), 0);
-        assertEq(items.balanceOf(alice, 1_000), uint256(multiplier));
+        assertEq(items.balanceOf(alice, 1000), uint256(multiplier));
     }
 
     function testFuzz_craft_revertsIfShort(uint16 multiplier, uint16 woodShortage) public {

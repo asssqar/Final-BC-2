@@ -68,17 +68,19 @@ contract GameItemsUnitTest is Test {
         items.mint(alice, 2, 100, "");
 
         uint256[] memory ids = new uint256[](2);
-        ids[0] = 1; ids[1] = 2;
+        ids[0] = 1;
+        ids[1] = 2;
         uint256[] memory amts = new uint256[](2);
-        amts[0] = 2; amts[1] = 1;
-        items.setRecipe(1, ids, amts, 1_000, 1, 5);
+        amts[0] = 2;
+        amts[1] = 1;
+        items.setRecipe(1, ids, amts, 1000, 1, 5);
         vm.stopPrank();
 
         vm.prank(alice);
         items.craft(1, 3); // burn 6 wood + 3 iron + 5*3 fee on input[0]=15 → total wood=21
         assertEq(items.balanceOf(alice, 1), 100 - 21);
         assertEq(items.balanceOf(alice, 2), 100 - 3);
-        assertEq(items.balanceOf(alice, 1_000), 3);
+        assertEq(items.balanceOf(alice, 1000), 3);
         assertEq(items.craftCount(1), 3);
     }
 
@@ -94,7 +96,7 @@ contract GameItemsUnitTest is Test {
         ids[0] = 1;
         uint256[] memory amts = new uint256[](1);
         amts[0] = 5;
-        items.setRecipe(1, ids, amts, 1_000, 1, 0);
+        items.setRecipe(1, ids, amts, 1000, 1, 0);
         vm.stopPrank();
 
         vm.prank(alice);
@@ -105,10 +107,12 @@ contract GameItemsUnitTest is Test {
     function test_setRecipe_revertsOnLengthMismatch() public {
         uint256[] memory ids = new uint256[](2);
         uint256[] memory amts = new uint256[](1);
-        ids[0] = 1; ids[1] = 2; amts[0] = 1;
+        ids[0] = 1;
+        ids[1] = 2;
+        amts[0] = 1;
         vm.prank(admin);
         vm.expectRevert(GameItems.LengthMismatch.selector);
-        items.setRecipe(1, ids, amts, 1_000, 1, 0);
+        items.setRecipe(1, ids, amts, 1000, 1, 0);
     }
 
     function test_pause_blocksMint() public {
@@ -149,8 +153,9 @@ contract GameItemsUnitTest is Test {
         vm.startPrank(admin);
         uint256[] memory ids = new uint256[](1);
         uint256[] memory amts = new uint256[](1);
-        ids[0] = 1; amts[0] = 1;
-        items.setRecipe(7, ids, amts, 1_000, 1, 0);
+        ids[0] = 1;
+        amts[0] = 1;
+        items.setRecipe(7, ids, amts, 1000, 1, 0);
         items.removeRecipe(7);
         vm.stopPrank();
         vm.expectRevert(GameItems.RecipeInactive.selector);

@@ -41,10 +41,7 @@ contract VRFCoordinatorV2_5Mock {
     {
         requestId = nextRequestId++;
         pending[requestId] = PendingRequest({
-            consumer: msg.sender,
-            numWords: req.numWords,
-            subId: req.subId,
-            fulfilled: false
+            consumer: msg.sender, numWords: req.numWords, subId: req.subId, fulfilled: false
         });
     }
 

@@ -3,10 +3,16 @@ pragma solidity 0.8.24;
 
 import {Governor} from "@openzeppelin/contracts/governance/Governor.sol";
 import {GovernorSettings} from "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
-import {GovernorCountingSimple} from "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
+import {
+    GovernorCountingSimple
+} from "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
 import {GovernorVotes} from "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
-import {GovernorVotesQuorumFraction} from "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
-import {GovernorTimelockControl} from "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol";
+import {
+    GovernorVotesQuorumFraction
+} from "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
+import {
+    GovernorTimelockControl
+} from "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol";
 import {IVotes} from "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import {TimelockController} from "@openzeppelin/contracts/governance/TimelockController.sol";
 import {IGovernor} from "@openzeppelin/contracts/governance/IGovernor.sol";
@@ -31,7 +37,11 @@ contract GameGovernor is
     /// @param timelock TimelockController; will own protocol contracts.
     constructor(IVotes token, TimelockController timelock)
         Governor("AetheriaGovernor")
-        GovernorSettings(1 days, 1 weeks, 0 /* proposalThreshold filled by override */)
+        GovernorSettings(
+            1 days,
+            1 weeks,
+            0 /* proposalThreshold filled by override */
+        )
         GovernorVotes(token)
         GovernorVotesQuorumFraction(4) // 4 %
         GovernorTimelockControl(timelock)
@@ -125,7 +135,12 @@ contract GameGovernor is
         return super._cancel(targets, values, calldatas, descriptionHash);
     }
 
-    function _executor() internal view override(Governor, GovernorTimelockControl) returns (address) {
+    function _executor()
+        internal
+        view
+        override(Governor, GovernorTimelockControl)
+        returns (address)
+    {
         return super._executor();
     }
 }

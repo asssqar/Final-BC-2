@@ -60,7 +60,7 @@ abstract contract Fixtures is Test {
         rental = new RentalVault(admin, address(vault));
 
         // Oracle (mock feed)
-        feed = new MockAggregator(2_000e8, 8);
+        feed = new MockAggregator(2000e8, 8);
         oracle = new PriceOracle(admin);
         oracle.setFeed(address(token), address(feed), 1 hours);
 

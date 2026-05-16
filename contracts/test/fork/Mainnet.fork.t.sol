@@ -3,7 +3,9 @@ pragma solidity 0.8.24;
 
 import {Test} from "forge-std/Test.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+import {
+    AggregatorV3Interface
+} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
 import {PriceOracle} from "../../src/oracles/PriceOracle.sol";
 
@@ -37,7 +39,7 @@ contract MainnetForkTest is Test {
         PriceOracle oracle = new PriceOracle(address(this));
         oracle.setFeed(USDC, ETH_USD, 2 hours);
         (uint256 price, uint256 ts) = oracle.getLatestPrice(USDC);
-        assertGt(price, 1_000e18); // ETH way above $1k
+        assertGt(price, 1000e18); // ETH way above $1k
         assertGt(ts, 0);
     }
 }

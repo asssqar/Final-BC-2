@@ -25,10 +25,12 @@ contract GameItemsV2 is GameItems {
     ///      child contract — there is no collision because the parent reserved 45 slots.
     uint256 public craftDiscountBps;
 
-    uint256 public constant MAX_DISCOUNT_BPS = 9_000; // 90%
+    uint256 public constant MAX_DISCOUNT_BPS = 9000; // 90%
 
     event CraftDiscountUpdated(uint256 newBps);
-    event CraftedWithDiscount(address indexed crafter, uint256 indexed recipeId, uint256 discountBps);
+    event CraftedWithDiscount(
+        address indexed crafter, uint256 indexed recipeId, uint256 discountBps
+    );
 
     error InvalidDiscount();
     error NotMasterCrafter();

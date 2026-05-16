@@ -1,0 +1,302 @@
+Warning: `--ir-minimum` enables `viaIR` with minimum optimization, which can result in inaccurate source mappings.
+Only use this flag as a workaround if you are experiencing "stack too deep" errors.
+Note that `viaIR` is production ready since Solidity 0.8.13 and above.
+See more: https://book.getfoundry.sh/guides/best-practices/stack-too-deep
+Compiling 143 files with Solc 0.8.24
+Solc 0.8.24 finished in 48.92s
+Compiler run successful with warnings:
+Warning (2018): Function state mutability can be restricted to view
+  --> script/PostDeployVerify.s.sol:16:5:
+   |
+16 |     function run() external {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2018): Function state mutability can be restricted to view
+  --> test/unit/GameToken.t.sol:52:5:
+   |
+52 |     function test_clock_isTimestamp() public {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Analysing contracts...
+Running tests...
+
+Ran 7 tests for test/unit/PriceOracle.t.sol:PriceOracleUnitTest
+[PASS] test_getLatestPrice_revertsOnNegative() (gas: 41933)
+[PASS] test_getLatestPrice_revertsOnStale() (gas: 31834)
+[PASS] test_getLatestPrice_revertsOnZero() (gas: 36303)
+[PASS] test_getLatestPrice_scalesTo1e18() (gas: 31644)
+[PASS] test_setFeed_byNonAdmin_reverts() (gas: 20579)
+[PASS] test_setFeed_revertsOnZeroAddr() (gas: 17677)
+[PASS] test_unregisteredFeed_reverts() (gas: 16096)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 5.81ms (4.95ms CPU time)
+
+Ran 4 tests for test/unit/GameItemsV2.t.sol:GameItemsV2UnitTest
+[PASS] test_craftWithDiscount_revertsWithoutProof() (gas: 50486)
+[PASS] test_setCraftDiscountBps_andDiscountedCraft() (gas: 539119)
+[PASS] test_setDiscount_revertsAboveMax() (gas: 41766)
+[PASS] test_storage_preservedAcrossUpgrade() (gas: 335577)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 8.34ms (4.97ms CPU time)
+
+Ran 10 tests for test/unit/GameToken.t.sol:GameTokenUnitTest
+[PASS] test_burn_reducesSupply() (gas: 94043)
+[PASS] test_clock_isTimestamp() (gas: 18002)
+[PASS] test_delegate_grantsVotingPower() (gas: 101591)
+[PASS] test_metadata() (gas: 42300)
+[PASS] test_mint_byMinter() (gas: 75484)
+[PASS] test_mint_revertsAtCap() (gas: 23425)
+[PASS] test_mint_revertsWhenNotMinter() (gas: 17700)
+[PASS] test_pastVotes() (gas: 104958)
+[PASS] test_permit_works() (gas: 130937)
+[PASS] test_revokeMinter() (gas: 33731)
+Suite result: ok. 10 passed; 0 failed; 0 skipped; finished in 9.94ms (8.72ms CPU time)
+
+Ran 1 test for test/security/Reentrancy.t.sol:ReentrancyTest
+[PASS] test_reentrancyDefended_byNonReentrantGuard() (gas: 1753991)
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 9.66ms (4.08ms CPU time)
+
+Ran 6 tests for test/security/AccessControl.t.sol:AccessControlTest
+[PASS] test_mint_isProtected() (gas: 26595)
+[PASS] test_pause_isProtected() (gas: 22553)
+[PASS] test_setFeed_isProtected() (gas: 22687)
+[PASS] test_setRecipe_isProtected() (gas: 26911)
+[PASS] test_tokenMint_isProtected() (gas: 17976)
+[PASS] test_upgrade_isProtected() (gas: 4467386)
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 10.51ms (7.19ms CPU time)
+
+Ran 3 tests for test/unit/Governance.t.sol:GovernanceUnitTest
+[PASS] test_proposalLifecycle() (gas: 510996)
+[PASS] test_proposalThreshold_notMet_reverts() (gas: 211774)
+[PASS] test_settings_matchSyllabus() (gas: 26594)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 11.31ms (5.26ms CPU time)
+
+Ran 4 tests for test/unit/ItemFactory.t.sol:ItemFactoryUnitTest
+[PASS] test_create2_isDeterministic() (gas: 347783)
+[PASS] test_create2_revertsOnDuplicateSalt() (gas: 1040441258)
+[PASS] test_create_deploysProxy() (gas: 334306)
+[PASS] test_unauthorized_reverts() (gas: 21939)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 4.39ms (3.02ms CPU time)
+
+Ran 16 tests for test/unit/GameItems.t.sol:GameItemsUnitTest
+[PASS] test_burn_byHolder() (gas: 132831)
+[PASS] test_burn_revertsWithoutApproval() (gas: 120906)
+[PASS] test_craft_insufficientResource() (gas: 214925)
+[PASS] test_craft_revertsOnInactive() (gas: 30422)
+[PASS] test_initialize_doubleCallReverts() (gas: 23273)
+[PASS] test_mint_byMinter() (gas: 120100)
+[PASS] test_mint_outOfRangeReverts() (gas: 29024)
+[PASS] test_mint_revertsWhenUnauthorized() (gas: 26710)
+[PASS] test_pause_blocksMint() (gas: 54409)
+[PASS] test_removeRecipe() (gas: 191456)
+[PASS] test_setRecipe_andCraft() (gas: 555736)
+[PASS] test_setRecipe_revertsOnLengthMismatch() (gas: 28240)
+[PASS] test_setTokenURI_overrides() (gas: 54916)
+[PASS] test_supportsInterface() (gas: 16875)
+[PASS] test_upgrade_revertsForNonUpgrader() (gas: 4810248)
+[PASS] test_upgrade_toV2() (gas: 4824767)
+Suite result: ok. 16 passed; 0 failed; 0 skipped; finished in 11.90ms (9.93ms CPU time)
+
+Ran 7 tests for test/unit/LootBox.t.sol:LootBoxUnitTest
+[PASS] test_open_andFulfill() (gas: 269690)
+[PASS] test_open_revertsWhenNoRewards() (gas: 53421)
+[PASS] test_open_revertsWhenPaused() (gas: 48660)
+[PASS] test_open_revertsWithoutKey() (gas: 91168)
+[PASS] test_secondReward_pickedAtHighWord() (gas: 276717)
+[PASS] test_setKeyItem_burnsOnOpen() (gas: 438009)
+[PASS] test_setRewards_revertsForNonAdmin() (gas: 17845)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 7.19ms (5.00ms CPU time)
+
+Ran 8 tests for test/unit/YieldVault.t.sol:YieldVaultUnitTest
+[PASS] test_decimalsOffset() (gas: 11850)
+[PASS] test_deposit_mintsShares() (gas: 160461)
+[PASS] test_inflationAttack_mitigated() (gas: 167328)
+[PASS] test_metadata() (gas: 30337)
+[PASS] test_notifyRewards_increasesPricePerShare() (gas: 242844)
+[PASS] test_pause_blocksDeposits() (gas: 76454)
+[PASS] test_unauthorizedReward_reverts() (gas: 102163)
+[PASS] test_withdraw_returnsAssets() (gas: 201688)
+Suite result: ok. 8 passed; 0 failed; 0 skipped; finished in 6.46ms (4.96ms CPU time)
+
+Ran 3 tests for test/gas/MathBench.t.sol:MathBenchTest
+[PASS] test_gasSnapshot() (gas: 34977)
+[PASS] test_mulDiv_equivalence(uint128,uint128,uint128) (runs: 512, μ: 19764, ~: 20061)
+[PASS] test_sqrt_equivalence(uint256) (runs: 512, μ: 29345, ~: 28499)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 190.80ms (171.41ms CPU time)
+
+Ran 10 tests for test/unit/RentalVault.t.sol:RentalVaultUnitTest
+[PASS] test_cancel_returnsItems() (gas: 317473)
+[PASS] test_cancel_revertsForNonOwner() (gas: 319494)
+[PASS] test_claimPayout_pullsFunds() (gas: 547047)
+[PASS] test_endRental_returnsToOwner() (gas: 539878)
+[PASS] test_endRental_revertsBeforeExpiry() (gas: 519231)
+[PASS] test_list_escrowsItems() (gas: 319983)
+[PASS] test_pause_blocksList() (gas: 87462)
+[PASS] test_rent_paysAndForwards() (gas: 531817)
+[PASS] test_rent_revertsOnInvalidDuration() (gas: 351961)
+[PASS] test_setProtocolFee_revertsAboveCap() (gas: 14862)
+Suite result: ok. 10 passed; 0 failed; 0 skipped; finished in 8.37s (15.76ms CPU time)
+
+Ran 4 tests for test/fuzz/AMM.fuzz.t.sol:AMMFuzzTest
+[PASS] testFuzz_addLiquidity_returnsLP(uint256,uint256) (runs: 512, μ: 157343, ~: 157717)
+[PASS] testFuzz_getAmountOut_neverExceedsReserves(uint256) (runs: 512, μ: 18998, ~: 18177)
+[PASS] testFuzz_quote_isMonotonic(uint256) (runs: 512, μ: 18638, ~: 17838)
+[PASS] testFuzz_swap_kNeverDecreases(uint256,bool) (runs: 512, μ: 186928, ~: 186821)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 8.37s (972.84ms CPU time)
+
+Ran 3 tests for test/invariant/AMM.invariant.t.sol:AMMInvariantTest
+[PASS] invariant_kNeverDecreases() (runs: 256, calls: 16384, reverts: 10818)
+
+╭------------+-----------+-------+---------+----------╮
+| Contract   | Selector  | Calls | Reverts | Discards |
++=====================================================+
+| AMMHandler | addLiq    | 5566  | 0       | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapAforB | 5375  | 5375    | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapBforA | 5443  | 5443    | 0        |
+╰------------+-----------+-------+---------+----------╯
+
+[PASS] invariant_lpSupplyNonZero() (runs: 256, calls: 16384, reverts: 10818)
+
+╭------------+-----------+-------+---------+----------╮
+| Contract   | Selector  | Calls | Reverts | Discards |
++=====================================================+
+| AMMHandler | addLiq    | 5566  | 0       | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapAforB | 5375  | 5375    | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapBforA | 5443  | 5443    | 0        |
+╰------------+-----------+-------+---------+----------╯
+
+[PASS] invariant_reservesMatchBalances() (runs: 256, calls: 16384, reverts: 10818)
+
+╭------------+-----------+-------+---------+----------╮
+| Contract   | Selector  | Calls | Reverts | Discards |
++=====================================================+
+| AMMHandler | addLiq    | 5566  | 0       | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapAforB | 5375  | 5375    | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapBforA | 5443  | 5443    | 0        |
+╰------------+-----------+-------+---------+----------╯
+
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 8.37s (23.26s CPU time)
+
+Ran 2 tests for test/fuzz/Voting.fuzz.t.sol:VotingFuzzTest
+[PASS] testFuzz_transferUpdatesVotes(uint96) (runs: 512, μ: 297182, ~: 300308)
+[PASS] testFuzz_votingPowerEqualsBalance_afterDelegate(address,uint96) (runs: 512, μ: 148268, ~: 148089)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 8.35s (8.48s CPU time)
+
+Ran 2 tests for test/fuzz/Crafting.fuzz.t.sol:CraftingFuzzTest
+[PASS] testFuzz_craftBurnsAndMintsCorrectly(uint16) (runs: 512, μ: 274537, ~: 274536)
+[PASS] testFuzz_craft_revertsIfShort(uint16,uint16) (runs: 512, μ: 181849, ~: 198273)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 8.37s (8.71s CPU time)
+
+Ran 1 test for test/invariant/Vault.invariant.t.sol:VaultInvariantTest
+[PASS] invariant_solvent() (runs: 256, calls: 16384, reverts: 192)
+
+╭--------------+----------+-------+---------+----------╮
+| Contract     | Selector | Calls | Reverts | Discards |
++======================================================+
+| VaultHandler | deposit  | 8177  | 192     | 0        |
+|--------------+----------+-------+---------+----------|
+| VaultHandler | withdraw | 8207  | 0       | 0        |
+╰--------------+----------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 8.57s (8.56s CPU time)
+
+Ran 3 tests for test/fuzz/Vault.fuzz.t.sol:VaultFuzzTest
+[PASS] testFuzz_assetsToShares_roundtrip(uint256) (runs: 512, μ: 35980, ~: 35180)
+[PASS] testFuzz_deposit_neverMintsMoreSharesThanPreview(uint256) (runs: 512, μ: 168468, ~: 167668)
+[PASS] testFuzz_deposit_redeem_roundsConservatively(uint256) (runs: 512, μ: 203949, ~: 204229)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 8.62s (832.61ms CPU time)
+
+Ran 13 tests for test/unit/ResourceAMM.t.sol:ResourceAMMUnitTest
+[PASS] test_addLiquidity_initialMint() (gas: 287164)
+[PASS] test_addLiquidity_proportional() (gas: 376097)
+[PASS] test_constructor_sortsTokens() (gas: 13930)
+[PASS] test_getAmountOut_revertsOnZeroReserves() (gas: 11992)
+[PASS] test_initialMint_revertsBelowMinLiquidity() (gas: 153822)
+[PASS] test_kInvariant_holdsAfterSwap() (gas: 343241)
+[PASS] test_quote_works() (gas: 12799)
+[PASS] test_removeLiquidity_returnsTokens() (gas: 437357)
+[PASS] test_removeLiquidity_slippageRevert() (gas: 341547)
+[PASS] test_swap_exactInput() (gas: 391528)
+[PASS] test_swap_revertsOnInvalidToken() (gas: 286468)
+[PASS] test_swap_revertsOnSlippage() (gas: 315912)
+[PASS] test_swap_revertsOnZeroInput() (gas: 284765)
+Suite result: ok. 13 passed; 0 failed; 0 skipped; finished in 8.63s (15.61ms CPU time)
+
+Ran 2 tests for test/invariant/Token.invariant.t.sol:TokenInvariantTest
+[PASS] invariant_totalSupplyConsistent() (runs: 256, calls: 16384, reverts: 0)
+
+╭--------------+----------+-------+---------+----------╮
+| Contract     | Selector | Calls | Reverts | Discards |
++======================================================+
+| TokenHandler | burn     | 8261  | 0       | 0        |
+|--------------+----------+-------+---------+----------|
+| TokenHandler | transfer | 8123  | 0       | 0        |
+╰--------------+----------+-------+---------+----------╯
+
+[PASS] invariant_votesNeverExceedSupply() (runs: 256, calls: 16384, reverts: 0)
+
+╭--------------+----------+-------+---------+----------╮
+| Contract     | Selector | Calls | Reverts | Discards |
++======================================================+
+| TokenHandler | burn     | 8261  | 0       | 0        |
+|--------------+----------+-------+---------+----------|
+| TokenHandler | transfer | 8123  | 0       | 0        |
+╰--------------+----------+-------+---------+----------╯
+
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 8.64s (14.00s CPU time)
+
+Ran 20 test suites in 8.64s (76.56s CPU time): 109 tests passed, 0 failed, 0 skipped (109 total tests)
+
+╭--------------------------------------+------------------+-------------------+-----------------+------------------╮
+| File                                 | % Lines          | % Statements      | % Branches      | % Funcs          |
++==================================================================================================================+
+| script/Deploy.s.sol                  | 0.00% (0/140)    | 0.00% (0/170)     | 0.00% (0/1)     | 0.00% (0/3)      |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| script/PostDeployVerify.s.sol        | 0.00% (0/27)     | 0.00% (0/38)      | 0.00% (0/26)    | 0.00% (0/1)      |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/amm/ResourceAMM.sol              | 90.24% (111/123) | 86.21% (150/174)  | 41.67% (15/36)  | 100.00% (14/14)  |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/factory/ItemFactory.sol          | 100.00% (14/14)  | 100.00% (13/13)   | 0.00% (0/2)     | 100.00% (4/4)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/governance/GameGovernor.sol      | 81.82% (18/22)   | 81.82% (18/22)    | 100.00% (0/0)   | 81.82% (9/11)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/libs/PureMath.sol                | 58.33% (14/24)   | 72.34% (34/47)    | 88.89% (8/9)    | 66.67% (2/3)     |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/libs/YulMath.sol                 | 4.92% (3/61)     | 0.00% (0/65)      | 0.00% (0/13)    | 100.00% (3/3)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/loot/LootBox.sol                 | 78.57% (44/56)   | 84.48% (49/58)    | 57.14% (4/7)    | 66.67% (6/9)     |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/oracles/MockAggregator.sol       | 61.90% (13/21)   | 69.23% (9/13)     | 100.00% (0/0)   | 50.00% (4/8)     |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/oracles/PriceOracle.sol          | 73.33% (22/30)   | 75.00% (27/36)    | 33.33% (4/12)   | 60.00% (3/5)     |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/tokens/GameItems.sol             | 76.54% (62/81)   | 73.56% (64/87)    | 58.33% (7/12)   | 78.95% (15/19)   |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/tokens/GameToken.sol             | 100.00% (19/19)  | 100.00% (16/16)   | 100.00% (2/2)   | 100.00% (7/7)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/upgrades/GameItemsV2.sol         | 100.00% (32/32)  | 93.02% (40/43)    | 57.14% (4/7)    | 100.00% (3/3)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/vaults/RentalVault.sol           | 80.52% (62/77)   | 75.00% (69/92)    | 30.77% (4/13)   | 69.23% (9/13)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| src/vaults/YieldVault.sol            | 65.00% (13/20)   | 60.00% (9/15)     | 100.00% (0/0)   | 66.67% (6/9)     |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| test/gas/MathBench.t.sol             | 100.00% (8/8)    | 100.00% (8/8)     | 100.00% (0/0)   | 100.00% (4/4)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| test/helpers/Fixtures.sol            | 0.00% (0/33)     | 0.00% (0/33)      | 100.00% (0/0)   | 0.00% (0/3)      |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| test/invariant/AMM.invariant.t.sol   | 100.00% (31/31)  | 96.97% (32/33)    | 0.00% (0/1)     | 100.00% (4/4)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| test/invariant/Token.invariant.t.sol | 100.00% (20/20)  | 100.00% (15/15)   | 100.00% (0/0)   | 100.00% (5/5)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| test/invariant/Vault.invariant.t.sol | 100.00% (18/18)  | 94.44% (17/18)    | 50.00% (1/2)    | 100.00% (3/3)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| test/security/Reentrancy.t.sol       | 76.47% (13/17)   | 78.57% (11/14)    | 100.00% (2/2)   | 60.00% (3/5)     |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| test/unit/VRFCoordinatorV2_5Mock.sol | 100.00% (14/14)  | 100.00% (10/10)   | 0.00% (0/4)     | 100.00% (5/5)    |
+|--------------------------------------+------------------+-------------------+-----------------+------------------|
+| Total                                | 59.80% (531/888) | 57.94% (591/1020) | 34.23% (51/149) | 77.30% (109/141) |
+╰--------------------------------------+------------------+-------------------+-----------------+------------------╯

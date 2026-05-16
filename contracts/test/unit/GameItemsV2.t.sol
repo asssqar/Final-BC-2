@@ -30,7 +30,7 @@ contract GameItemsV2UnitTest is Test {
         ids[0] = 1;
         uint256[] memory amts = new uint256[](1);
         amts[0] = 5;
-        proxy.setRecipe(42, ids, amts, 1_000, 1, 0);
+        proxy.setRecipe(42, ids, amts, 1000, 1, 0);
         uint256 craftCountBefore = proxy.craftCount(42);
         uint256 balBefore = proxy.balanceOf(alice, 1);
 
@@ -56,20 +56,20 @@ contract GameItemsV2UnitTest is Test {
         ids[0] = 1;
         uint256[] memory amts = new uint256[](1);
         amts[0] = 1;
-        proxy.setRecipe(1, ids, amts, 1_000, 1, 10);
+        proxy.setRecipe(1, ids, amts, 1000, 1, 10);
 
         // Mint resources + cosmetic proof to alice.
-        proxy.mint(alice, 1, 1_000, "");
+        proxy.mint(alice, 1, 1000, "");
         proxy.mint(alice, 100_001, 1, ""); // cosmetic id (≥ EQUIPMENT_RANGE_END)
 
-        v2.setCraftDiscountBps(5_000); // 50 % discount
+        v2.setCraftDiscountBps(5000); // 50 % discount
 
         vm.prank(alice);
         v2.craftWithDiscount(1, 1, 100_001);
 
         // Without discount: 1 wood + 10 wood fee = 11 wood. With 50 % discount on the fee: 1 + 5 = 6 wood burned.
-        assertEq(proxy.balanceOf(alice, 1), 1_000 - 6);
-        assertEq(proxy.balanceOf(alice, 1_000), 1);
+        assertEq(proxy.balanceOf(alice, 1), 1000 - 6);
+        assertEq(proxy.balanceOf(alice, 1000), 1);
     }
 
     function test_craftWithDiscount_revertsWithoutProof() public {
@@ -83,6 +83,6 @@ contract GameItemsV2UnitTest is Test {
         proxy.upgradeToAndCall(address(v2Impl), "");
         GameItemsV2 v2 = GameItemsV2(address(proxy));
         vm.expectRevert(GameItemsV2.InvalidDiscount.selector);
-        v2.setCraftDiscountBps(9_001);
+        v2.setCraftDiscountBps(9001);
     }
 }

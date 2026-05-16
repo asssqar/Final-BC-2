@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
-import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+import {
+    AggregatorV3Interface
+} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 import {IPriceOracle} from "../interfaces/IPriceOracle.sol";
@@ -19,7 +21,7 @@ contract PriceOracle is IPriceOracle, AccessControl {
     struct FeedConfig {
         AggregatorV3Interface feed;
         uint64 staleness; // seconds
-        uint8 decimals;   // cached decimals of the feed
+        uint8 decimals; // cached decimals of the feed
         bool registered;
     }
 
@@ -46,12 +48,7 @@ contract PriceOracle is IPriceOracle, AccessControl {
         require(staleness > 0, "PriceOracle: zero staleness");
         AggregatorV3Interface agg = AggregatorV3Interface(feed);
         uint8 d = agg.decimals();
-        _feeds[asset] = FeedConfig({
-            feed: agg,
-            staleness: staleness,
-            decimals: d,
-            registered: true
-        });
+        _feeds[asset] = FeedConfig({feed: agg, staleness: staleness, decimals: d, registered: true});
         emit FeedSet(asset, feed, staleness);
     }
 

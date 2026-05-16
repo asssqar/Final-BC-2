@@ -21,31 +21,38 @@ library YulMath {
                 // shift selection to compute the most-significant bit of x.
                 let xAux := x
                 let r := 1
-                if iszero(lt(xAux, 0x100000000000000000000000000000000)) { // 2^128
+                if iszero(lt(xAux, 0x100000000000000000000000000000000)) {
+                    // 2^128
                     xAux := shr(128, xAux)
                     r := shl(64, r)
                 }
-                if iszero(lt(xAux, 0x10000000000000000)) { // 2^64
+                if iszero(lt(xAux, 0x10000000000000000)) {
+                    // 2^64
                     xAux := shr(64, xAux)
                     r := shl(32, r)
                 }
-                if iszero(lt(xAux, 0x100000000)) { // 2^32
+                if iszero(lt(xAux, 0x100000000)) {
+                    // 2^32
                     xAux := shr(32, xAux)
                     r := shl(16, r)
                 }
-                if iszero(lt(xAux, 0x10000)) { // 2^16
+                if iszero(lt(xAux, 0x10000)) {
+                    // 2^16
                     xAux := shr(16, xAux)
                     r := shl(8, r)
                 }
-                if iszero(lt(xAux, 0x100)) { // 2^8
+                if iszero(lt(xAux, 0x100)) {
+                    // 2^8
                     xAux := shr(8, xAux)
                     r := shl(4, r)
                 }
-                if iszero(lt(xAux, 0x10)) { // 2^4
+                if iszero(lt(xAux, 0x10)) {
+                    // 2^4
                     xAux := shr(4, xAux)
                     r := shl(2, r)
                 }
-                if iszero(lt(xAux, 0x4)) { // 2^2
+                if iszero(lt(xAux, 0x4)) {
+                    // 2^2
                     r := shl(1, r)
                 }
 

@@ -45,19 +45,22 @@ contract MaliciousReceiver is IERC1155Receiver {
             reentered = true;
             // Try to call `list` again while the original is still mid-execution.
             try vault.list(itemContract, itemId, amount, token, 1, 60, 7 days) {
-                // shouldn't succeed
-            } catch {
+            // shouldn't succeed
+            }
+                catch {
                 // expected: ReentrancyGuard reverts
             }
         }
         return IERC1155Receiver.onERC1155Received.selector;
     }
 
-    function onERC1155BatchReceived(address, address, uint256[] calldata, uint256[] calldata, bytes calldata)
-        external
-        pure
-        returns (bytes4)
-    {
+    function onERC1155BatchReceived(
+        address,
+        address,
+        uint256[] calldata,
+        uint256[] calldata,
+        bytes calldata
+    ) external pure returns (bytes4) {
         return IERC1155Receiver.onERC1155BatchReceived.selector;
     }
 
@@ -74,10 +77,14 @@ contract ReentrancyTest is Test {
 
     function setUp() public {
         GameItems impl = new GameItems();
-        items = GameItems(address(new ERC1967Proxy(
-            address(impl),
-            abi.encodeCall(GameItems.initialize, (admin, "ipfs://t/{id}.json"))
-        )));
+        items = GameItems(
+            address(
+                new ERC1967Proxy(
+                    address(impl),
+                    abi.encodeCall(GameItems.initialize, (admin, "ipfs://t/{id}.json"))
+                )
+            )
+        );
         items.grantRole(items.MINTER_ROLE(), admin);
         token = new GameToken(admin, admin, 1e24);
         rental = new RentalVault(admin, address(0xFEE));
@@ -86,22 +93,23 @@ contract ReentrancyTest is Test {
     function test_reentrancyDefended_byNonReentrantGuard() public {
         // Set up a legitimate owner who lists items for rental.
         address owner = address(0xC0DE);
-        items.mint(owner, 5_000, 4, "");
+        items.mint(owner, 5000, 4, "");
         vm.startPrank(owner);
         items.setApprovalForAll(address(rental), true);
-        rental.list(address(items), 5_000, 2, address(token), 1, 60, 7 days);
+        rental.list(address(items), 5000, 2, address(token), 1, 60, 7 days);
         vm.stopPrank();
 
         // The malicious receiver acts as renter. When rental.rent() transfers items TO mal,
         // it triggers mal.onERC1155Received, which tries to re-enter rental.list().
         // The nonReentrant guard must block that re-entry.
-        MaliciousReceiver mal = new MaliciousReceiver(rental, address(token), address(items), 5_000, 2);
-        items.mint(address(mal), 5_000, 4, ""); // mal needs items to (attempt to) list
+        MaliciousReceiver mal =
+            new MaliciousReceiver(rental, address(token), address(items), 5000, 2);
+        items.mint(address(mal), 5000, 4, ""); // mal needs items to (attempt to) list
         vm.prank(address(mal));
         items.setApprovalForAll(address(rental), true);
 
         // Fund mal with enough tokens to pay for the rent.
-        deal(address(token), address(mal), 1_000e18);
+        deal(address(token), address(mal), 1000e18);
         vm.prank(address(mal));
         token.approve(address(rental), type(uint256).max);
 

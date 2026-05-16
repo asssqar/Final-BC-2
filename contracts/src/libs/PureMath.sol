@@ -12,13 +12,33 @@ library PureMath {
         // Initial estimate via floor(log2(x)) shift, same as YulMath but Solidity-side.
         uint256 r = x;
         uint256 t = x;
-        if (t >= 1 << 128) { t >>= 128; r = 1 << 64; } else { r = 1; }
-        if (t >= 1 << 64)  { t >>= 64;  r <<= 32; }
-        if (t >= 1 << 32)  { t >>= 32;  r <<= 16; }
-        if (t >= 1 << 16)  { t >>= 16;  r <<= 8; }
-        if (t >= 1 << 8)   { t >>= 8;   r <<= 4; }
-        if (t >= 1 << 4)   { t >>= 4;   r <<= 2; }
-        if (t >= 1 << 2)   {            r <<= 1; }
+        if (t >= 1 << 128) {
+            t >>= 128;
+            r = 1 << 64;
+        } else {
+            r = 1;
+        }
+        if (t >= 1 << 64) {
+            t >>= 64;
+            r <<= 32;
+        }
+        if (t >= 1 << 32) {
+            t >>= 32;
+            r <<= 16;
+        }
+        if (t >= 1 << 16) {
+            t >>= 16;
+            r <<= 8;
+        }
+        if (t >= 1 << 8) {
+            t >>= 8;
+            r <<= 4;
+        }
+        if (t >= 1 << 4) {
+            t >>= 4;
+            r <<= 2;
+        }
+        if (t >= 1 << 2) r <<= 1;
 
         unchecked {
             r = (r + x / r) >> 1;

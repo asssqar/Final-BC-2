@@ -24,8 +24,8 @@ contract RentalVaultUnitTest is Test {
         token = new GameToken(admin, admin, 1_000_000e18);
         rental = new RentalVault(admin, feeRec);
 
-        items.mint(owner, 5_000, 10, ""); // equipment id
-        token.transfer(renter, 1_000e18);
+        items.mint(owner, 5000, 10, ""); // equipment id
+        token.transfer(renter, 1000e18);
     }
 
     function _list(uint256 amount, uint256 pricePerSec, uint64 minD, uint64 maxD)
@@ -34,21 +34,21 @@ contract RentalVaultUnitTest is Test {
     {
         vm.startPrank(owner);
         items.setApprovalForAll(address(rental), true);
-        id = rental.list(address(items), 5_000, amount, address(token), pricePerSec, minD, maxD);
+        id = rental.list(address(items), 5000, amount, address(token), pricePerSec, minD, maxD);
         vm.stopPrank();
     }
 
     function test_list_escrowsItems() public {
         _list(3, 1e15, 60, 7 days);
-        assertEq(items.balanceOf(address(rental), 5_000), 3);
-        assertEq(items.balanceOf(owner, 5_000), 7);
+        assertEq(items.balanceOf(address(rental), 5000), 3);
+        assertEq(items.balanceOf(owner, 5000), 7);
     }
 
     function test_cancel_returnsItems() public {
         uint256 id = _list(3, 1e15, 60, 7 days);
         vm.prank(owner);
         rental.cancel(id);
-        assertEq(items.balanceOf(owner, 5_000), 10);
+        assertEq(items.balanceOf(owner, 5000), 10);
     }
 
     function test_rent_paysAndForwards() public {
@@ -57,7 +57,7 @@ contract RentalVaultUnitTest is Test {
         token.approve(address(rental), type(uint256).max);
         rental.rent(id, 1 hours);
         vm.stopPrank();
-        assertEq(items.balanceOf(renter, 5_000), 2);
+        assertEq(items.balanceOf(renter, 5000), 2);
         // Owner accrued (cost - 2% fee)
         uint256 totalCost = uint256(3600) * 1e15;
         uint256 fee = totalCost * 200 / 10_000;
@@ -84,7 +84,7 @@ contract RentalVaultUnitTest is Test {
 
         vm.warp(block.timestamp + 1 hours + 1);
         rental.endRental(id);
-        assertEq(items.balanceOf(owner, 5_000), 8);
+        assertEq(items.balanceOf(owner, 5000), 8);
     }
 
     function test_claimPayout_pullsFunds() public {
@@ -102,7 +102,7 @@ contract RentalVaultUnitTest is Test {
 
     function test_setProtocolFee_revertsAboveCap() public {
         vm.expectRevert(RentalVault.InvalidFee.selector);
-        rental.setProtocolFeeBps(1_001);
+        rental.setProtocolFeeBps(1001);
     }
 
     function test_pause_blocksList() public {
@@ -110,7 +110,7 @@ contract RentalVaultUnitTest is Test {
         vm.startPrank(owner);
         items.setApprovalForAll(address(rental), true);
         vm.expectRevert();
-        rental.list(address(items), 5_000, 1, address(token), 1e15, 60, 7 days);
+        rental.list(address(items), 5000, 1, address(token), 1e15, 60, 7 days);
         vm.stopPrank();
     }
 

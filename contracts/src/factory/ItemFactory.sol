@@ -19,7 +19,9 @@ import {Create2} from "@openzeppelin/contracts/utils/Create2.sol";
 contract ItemFactory is AccessControl {
     bytes32 public constant FACTORY_ADMIN_ROLE = keccak256("FACTORY_ADMIN_ROLE");
 
-    event ProxyDeployed(address indexed proxy, address indexed implementation, bytes32 indexed salt, bool create2);
+    event ProxyDeployed(
+        address indexed proxy, address indexed implementation, bytes32 indexed salt, bool create2
+    );
 
     error DeployFailed();
 
@@ -49,8 +51,7 @@ contract ItemFactory is AccessControl {
         bytes32 salt
     ) external onlyRole(FACTORY_ADMIN_ROLE) returns (address proxy) {
         bytes memory bytecode = abi.encodePacked(
-            type(ERC1967Proxy).creationCode,
-            abi.encode(implementation, data)
+            type(ERC1967Proxy).creationCode, abi.encode(implementation, data)
         );
         proxy = Create2.deploy(0, salt, bytecode);
         emit ProxyDeployed(proxy, implementation, salt, true);
@@ -63,8 +64,7 @@ contract ItemFactory is AccessControl {
         returns (address)
     {
         bytes memory bytecode = abi.encodePacked(
-            type(ERC1967Proxy).creationCode,
-            abi.encode(implementation, data)
+            type(ERC1967Proxy).creationCode, abi.encode(implementation, data)
         );
         return Create2.computeAddress(salt, keccak256(bytecode));
     }

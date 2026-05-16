@@ -1,0 +1,163 @@
+'forge clean' running (wd: C:\Users\musee\Desktop\character\Block\Final-BC-2\contracts)
+'forge config --json' running
+'forge build --build-info --skip ./test/** ./script/** --force' running (wd: C:\Users\musee\Desktop\character\Block\Final-BC-2\contracts)
+INFO:Detectors:
+Detector: arbitrary-send-erc20
+YieldVault.notifyRewards(address,uint256) (src/vaults/YieldVault.sol#44-52) uses arbitrary from in transferFrom: IERC20(asset()).safeTransferFrom(from,address(this),amount) (src/vaults/YieldVault.sol#50)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#arbitrary-from-in-transferfrom
+INFO:Detectors:
+Detector: incorrect-equality
+ResourceAMM._burnLP(address) (src/amm/ResourceAMM.sol#286-304) uses a dangerous strict equality:
+	- amount0 == 0 || amount1 == 0 (src/amm/ResourceAMM.sol#294)
+ResourceAMM._mintLP(address) (src/amm/ResourceAMM.sol#259-284) uses a dangerous strict equality:
+	- _totalSupply == 0 (src/amm/ResourceAMM.sol#267)
+ResourceAMM._mintLP(address) (src/amm/ResourceAMM.sol#259-284) uses a dangerous strict equality:
+	- liquidity == 0 (src/amm/ResourceAMM.sol#280)
+ResourceAMM.addLiquidity(uint256,uint256,uint256,uint256,address) (src/amm/ResourceAMM.sol#132-163) uses a dangerous strict equality:
+	- r0 == 0 && r1 == 0 (src/amm/ResourceAMM.sol#140)
+ResourceAMM.getAmountOut(uint256,uint256,uint256) (src/amm/ResourceAMM.sol#101-112) uses a dangerous strict equality:
+	- reserveIn == 0 || reserveOut == 0 (src/amm/ResourceAMM.sol#107)
+ResourceAMM.quote(uint256,uint256,uint256) (src/amm/ResourceAMM.sol#114-122) uses a dangerous strict equality:
+	- reserveA == 0 || reserveB == 0 (src/amm/ResourceAMM.sol#120)
+ResourceAMM.swap(address,uint256,uint256,address) (src/amm/ResourceAMM.sol#185-233) uses a dangerous strict equality:
+	- amountOut == 0 (src/amm/ResourceAMM.sol#198)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+INFO:Detectors:
+Detector: reentrancy-no-eth
+Reentrancy in ResourceAMM.addLiquidity(uint256,uint256,uint256,uint256,address) (src/amm/ResourceAMM.sol#132-163):
+	External calls:
+	- token0.safeTransferFrom(msg.sender,address(this),amount0) (src/amm/ResourceAMM.sol#158)
+	- token1.safeTransferFrom(msg.sender,address(this),amount1) (src/amm/ResourceAMM.sol#159)
+	State variables written after the call(s):
+	- liquidity = _mintLP(to) (src/amm/ResourceAMM.sol#161)
+		- _blockTimestampLast = uint32(block.timestamp) (src/amm/ResourceAMM.sol#310)
+	ResourceAMM._blockTimestampLast (src/amm/ResourceAMM.sol#36) can be used in cross function reentrancies:
+	- ResourceAMM.getReserves() (src/amm/ResourceAMM.sol#96-98)
+	- liquidity = _mintLP(to) (src/amm/ResourceAMM.sol#161)
+		- _reserve0 = uint112(balance0) (src/amm/ResourceAMM.sol#308)
+	ResourceAMM._reserve0 (src/amm/ResourceAMM.sol#34) can be used in cross function reentrancies:
+	- ResourceAMM.getReserves() (src/amm/ResourceAMM.sol#96-98)
+	- liquidity = _mintLP(to) (src/amm/ResourceAMM.sol#161)
+		- _reserve1 = uint112(balance1) (src/amm/ResourceAMM.sol#309)
+	ResourceAMM._reserve1 (src/amm/ResourceAMM.sol#35) can be used in cross function reentrancies:
+	- ResourceAMM.getReserves() (src/amm/ResourceAMM.sol#96-98)
+Reentrancy in ResourceAMM.swap(address,uint256,uint256,address) (src/amm/ResourceAMM.sol#185-233):
+	External calls:
+	- inToken.safeTransferFrom(msg.sender,address(this),amountIn) (src/amm/ResourceAMM.sol#201)
+	- outToken.safeTransfer(to,amountOut) (src/amm/ResourceAMM.sol#202)
+	State variables written after the call(s):
+	- _update(balance0,balance1) (src/amm/ResourceAMM.sol#230)
+		- _reserve0 = uint112(balance0) (src/amm/ResourceAMM.sol#308)
+	ResourceAMM._reserve0 (src/amm/ResourceAMM.sol#34) can be used in cross function reentrancies:
+	- ResourceAMM.getReserves() (src/amm/ResourceAMM.sol#96-98)
+	- _update(balance0,balance1) (src/amm/ResourceAMM.sol#230)
+		- _reserve1 = uint112(balance1) (src/amm/ResourceAMM.sol#309)
+	ResourceAMM._reserve1 (src/amm/ResourceAMM.sol#35) can be used in cross function reentrancies:
+	- ResourceAMM.getReserves() (src/amm/ResourceAMM.sol#96-98)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+INFO:Detectors:
+Detector: uninitialized-local
+LootBox.fulfillRandomWords(uint256,uint256[]).cumulative (src/loot/LootBox.sol#124) is a local variable never initialized
+LootBox.setRewards(LootBox.Reward[]).sum (src/loot/LootBox.sol#144) is a local variable never initialized
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#uninitialized-local-variables
+INFO:Detectors:
+Detector: unused-return
+PriceOracle.getLatestPrice(address) (src/oracles/PriceOracle.sol#55-80) ignores return value by (None,answer,None,_updatedAt,answeredInRound) = cfg.feed.latestRoundData() (src/oracles/PriceOracle.sol#64)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+INFO:Detectors:
+Detector: reentrancy-benign
+Reentrancy in ResourceAMM._burnLP(address) (src/amm/ResourceAMM.sol#286-304):
+	External calls:
+	- token0.safeTransfer(to,amount0) (src/amm/ResourceAMM.sol#297)
+	- token1.safeTransfer(to,amount1) (src/amm/ResourceAMM.sol#298)
+	State variables written after the call(s):
+	- _update(balance0,balance1) (src/amm/ResourceAMM.sol#302)
+		- _blockTimestampLast = uint32(block.timestamp) (src/amm/ResourceAMM.sol#310)
+	- _update(balance0,balance1) (src/amm/ResourceAMM.sol#302)
+		- _reserve0 = uint112(balance0) (src/amm/ResourceAMM.sol#308)
+	- _update(balance0,balance1) (src/amm/ResourceAMM.sol#302)
+		- _reserve1 = uint112(balance1) (src/amm/ResourceAMM.sol#309)
+	- kLast = uint256(_reserve0) * uint256(_reserve1) (src/amm/ResourceAMM.sol#303)
+Reentrancy in LootBox.openLootBox() (src/loot/LootBox.sol#89-110):
+	External calls:
+	- gameItems.burn(msg.sender,keyItemId,keyItemAmount) (src/loot/LootBox.sol#94)
+	- requestId = s_vrfCoordinator.requestRandomWords(req) (src/loot/LootBox.sol#107)
+	State variables written after the call(s):
+	- requests[requestId] = PendingRequest({player:msg.sender,fulfilled:false}) (src/loot/LootBox.sol#108)
+Reentrancy in RentalVault.rent(uint256,uint64) (src/vaults/RentalVault.sol#144-166):
+	External calls:
+	- IERC20(l.payToken).safeTransferFrom(msg.sender,address(this),totalCost) (src/vaults/RentalVault.sol#159)
+	State variables written after the call(s):
+	- payoutOf[l.owner][l.payToken] += ownerCut (src/vaults/RentalVault.sol#160)
+	- payoutOf[feeRecipient][l.payToken] += fee (src/vaults/RentalVault.sol#161)
+Reentrancy in ResourceAMM.swap(address,uint256,uint256,address) (src/amm/ResourceAMM.sol#185-233):
+	External calls:
+	- inToken.safeTransferFrom(msg.sender,address(this),amountIn) (src/amm/ResourceAMM.sol#201)
+	- outToken.safeTransfer(to,amountOut) (src/amm/ResourceAMM.sol#202)
+	State variables written after the call(s):
+	- _update(balance0,balance1) (src/amm/ResourceAMM.sol#230)
+		- _blockTimestampLast = uint32(block.timestamp) (src/amm/ResourceAMM.sol#310)
+	- kLast = uint256(_reserve0) * uint256(_reserve1) (src/amm/ResourceAMM.sol#231)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+INFO:Detectors:
+Detector: reentrancy-events
+Reentrancy in ItemFactory.deployERC1967Proxy(address,bytes) (src/factory/ItemFactory.sol#37-44):
+	External calls:
+	- proxy = address(new ERC1967Proxy(implementation,data)) (src/factory/ItemFactory.sol#42)
+	Event emitted after the call(s):
+	- ProxyDeployed(proxy,implementation,bytes32(0),false) (src/factory/ItemFactory.sol#43)
+Reentrancy in LootBox.fulfillRandomWords(uint256,uint256[]) (src/loot/LootBox.sol#114-136):
+	External calls:
+	- gameItems.mint(r.player,chosen.itemId,chosen.amount,) (src/loot/LootBox.sol#134)
+	Event emitted after the call(s):
+	- LootBoxFulfilled(r.player,requestId,chosen.itemId,chosen.amount) (src/loot/LootBox.sol#135)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+INFO:Detectors:
+Detector: timestamp
+ResourceAMM.quote(uint256,uint256,uint256) (src/amm/ResourceAMM.sol#114-122) uses timestamp for comparisons
+	Dangerous comparisons:
+	- reserveA == 0 || reserveB == 0 (src/amm/ResourceAMM.sol#120)
+ResourceAMM.addLiquidity(uint256,uint256,uint256,uint256,address) (src/amm/ResourceAMM.sol#132-163) uses timestamp for comparisons
+	Dangerous comparisons:
+	- r0 == 0 && r1 == 0 (src/amm/ResourceAMM.sol#140)
+	- amount1Optimal <= amount1Desired (src/amm/ResourceAMM.sol#145)
+	- amount1Optimal < amount1Min (src/amm/ResourceAMM.sol#146)
+	- amount0Optimal > amount0Desired (src/amm/ResourceAMM.sol#151)
+	- amount0Optimal < amount0Min (src/amm/ResourceAMM.sol#152)
+ResourceAMM.removeLiquidity(uint256,uint256,uint256,address) (src/amm/ResourceAMM.sol#165-174) uses timestamp for comparisons
+	Dangerous comparisons:
+	- amount0 < amount0Min || amount1 < amount1Min (src/amm/ResourceAMM.sol#172)
+ResourceAMM._mintLP(address) (src/amm/ResourceAMM.sol#259-284) uses timestamp for comparisons
+	Dangerous comparisons:
+	- _totalSupply == 0 (src/amm/ResourceAMM.sol#267)
+	- liquidity <= MINIMUM_LIQUIDITY (src/amm/ResourceAMM.sol#269)
+	- liquidity == 0 (src/amm/ResourceAMM.sol#280)
+ResourceAMM._burnLP(address) (src/amm/ResourceAMM.sol#286-304) uses timestamp for comparisons
+	Dangerous comparisons:
+	- amount0 == 0 || amount1 == 0 (src/amm/ResourceAMM.sol#294)
+PriceOracle.getLatestPrice(address) (src/oracles/PriceOracle.sol#55-80) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp - _updatedAt > cfg.staleness (src/oracles/PriceOracle.sol#67)
+RentalVault.endRental(uint256) (src/vaults/RentalVault.sol#173-189) uses timestamp for comparisons
+	Dangerous comparisons:
+	- block.timestamp < l.endTime (src/vaults/RentalVault.sol#176)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+INFO:Detectors:
+Detector: naming-convention
+Function IGameItems.RESOURCE_RANGE_END() (src/interfaces/IGameItems.sol#10) is not in mixedCase
+Parameter LootBox.setVRFConfig(bytes32,uint256,uint16,uint32)._keyHash (src/loot/LootBox.sol#160) is not in mixedCase
+Parameter LootBox.setVRFConfig(bytes32,uint256,uint16,uint32)._subId (src/loot/LootBox.sol#160) is not in mixedCase
+Parameter LootBox.setVRFConfig(bytes32,uint256,uint16,uint32)._confirmations (src/loot/LootBox.sol#160) is not in mixedCase
+Parameter LootBox.setVRFConfig(bytes32,uint256,uint16,uint32)._gasLimit (src/loot/LootBox.sol#160) is not in mixedCase
+Variable GameItems.__gap (src/tokens/GameItems.sol#74) is not in mixedCase
+Function GameToken.CLOCK_MODE() (src/tokens/GameToken.sol#66-68) is not in mixedCase
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#conformance-to-solidity-naming-conventions
+INFO:Detectors:
+Detector: unindexed-event-address
+Event RentalVault.FeeRecipientUpdated(address) (src/vaults/RentalVault.sol#75) has address parameters but no indexed parameters
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unindexed-event-address-parameters
+INFO:Detectors:
+Detector: cache-array-length
+Loop condition i < rewards.length (src/loot/LootBox.sol#126) should use cached array length instead of referencing `length` member of the storage array.
+ Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cache-array-length
+INFO:Slither:. analyzed (94 contracts with 101 detectors), 35 result(s) found

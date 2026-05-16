@@ -33,7 +33,7 @@ contract ResourceAMMUnitTest is Test {
     function test_addLiquidity_initialMint() public {
         uint256 lp = _seed(100e18, 100e18);
         // sqrt(100e18*100e18) - 1000
-        assertEq(lp, 100e18 - 1_000);
+        assertEq(lp, 100e18 - 1000);
         assertEq(amm.totalSupply(), 100e18);
         (uint112 r0, uint112 r1,) = amm.getReserves();
         assertEq(uint256(r0), 100e18);
@@ -52,7 +52,7 @@ contract ResourceAMMUnitTest is Test {
     }
 
     function test_swap_exactInput() public {
-        _seed(1_000e18, 1_000e18);
+        _seed(1000e18, 1000e18);
         wood.transfer(alice, 100e18);
         vm.startPrank(alice);
         wood.approve(address(amm), 100e18);
@@ -66,26 +66,26 @@ contract ResourceAMMUnitTest is Test {
     }
 
     function test_swap_revertsOnSlippage() public {
-        _seed(1_000e18, 1_000e18);
+        _seed(1000e18, 1000e18);
         wood.approve(address(amm), 100e18);
         vm.expectRevert(ResourceAMM.SlippageExceeded.selector);
         amm.swap(address(wood), 100e18, 999e18, admin);
     }
 
     function test_swap_revertsOnInvalidToken() public {
-        _seed(1_000e18, 1_000e18);
+        _seed(1000e18, 1000e18);
         vm.expectRevert(ResourceAMM.InvalidToken.selector);
         amm.swap(address(0xdead), 1, 0, admin);
     }
 
     function test_swap_revertsOnZeroInput() public {
-        _seed(1_000e18, 1_000e18);
+        _seed(1000e18, 1000e18);
         vm.expectRevert(ResourceAMM.InsufficientInputAmount.selector);
         amm.swap(address(wood), 0, 0, admin);
     }
 
     function test_removeLiquidity_returnsTokens() public {
-        uint256 lp = _seed(1_000e18, 1_000e18);
+        uint256 lp = _seed(1000e18, 1000e18);
         amm.transfer(alice, lp / 2);
         vm.startPrank(alice);
         amm.approve(address(amm), lp / 2);
@@ -97,7 +97,7 @@ contract ResourceAMMUnitTest is Test {
     }
 
     function test_removeLiquidity_slippageRevert() public {
-        uint256 lp = _seed(1_000e18, 1_000e18);
+        uint256 lp = _seed(1000e18, 1000e18);
         vm.expectRevert(ResourceAMM.SlippageExceeded.selector);
         amm.removeLiquidity(lp / 2, type(uint256).max, 0, admin);
     }
@@ -110,7 +110,7 @@ contract ResourceAMMUnitTest is Test {
     }
 
     function test_kInvariant_holdsAfterSwap() public {
-        _seed(1_000e18, 1_000e18);
+        _seed(1000e18, 1000e18);
         uint256 kBefore = amm.kLast();
         wood.approve(address(amm), 50e18);
         amm.swap(address(wood), 50e18, 0, admin);
@@ -119,7 +119,7 @@ contract ResourceAMMUnitTest is Test {
     }
 
     function test_quote_works() public view {
-        assertEq(amm.quote(100, 1_000, 2_000), 200);
+        assertEq(amm.quote(100, 1000, 2000), 200);
     }
 
     function test_getAmountOut_revertsOnZeroReserves() public {

@@ -48,3 +48,7 @@ sepolia = "${SEPOLIA_RPC}"
 arb_sepolia = { key = "${ARBISCAN_API_KEY}", chain = 421614 }
 op_sepolia = { key = "${OPTIMISTIC_ETHERSCAN_API_KEY}", chain = 11155420 }
 base_sepolia = { key = "${BASESCAN_API_KEY}", chain = 84532 }
+
+[profile.coverage]
+via_ir = true
+

@@ -1,0 +1,1085 @@
+No files changed, compilation skipped
+
+Ran 3 tests for test/unit/Governance.t.sol:GovernanceUnitTest
+[PASS] test_proposalLifecycle() (gas: 348708)
+[PASS] test_proposalThreshold_notMet_reverts() (gas: 171521)
+[PASS] test_settings_matchSyllabus() (gas: 17706)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 1.27ms (480.70µs CPU time)
+
+Ran 6 tests for test/security/AccessControl.t.sol:AccessControlTest
+[PASS] test_mint_isProtected() (gas: 21384)
+[PASS] test_pause_isProtected() (gas: 18585)
+[PASS] test_setFeed_isProtected() (gas: 17824)
+[PASS] test_setRecipe_isProtected() (gas: 20044)
+[PASS] test_tokenMint_isProtected() (gas: 13814)
+[PASS] test_upgrade_isProtected() (gas: 2892087)
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 1.43ms (475.10µs CPU time)
+
+Ran 7 tests for test/unit/PriceOracle.t.sol:PriceOracleUnitTest
+[PASS] test_getLatestPrice_revertsOnNegative() (gas: 32561)
+[PASS] test_getLatestPrice_revertsOnStale() (gas: 23733)
+[PASS] test_getLatestPrice_revertsOnZero() (gas: 27354)
+[PASS] test_getLatestPrice_scalesTo1e18() (gas: 23127)
+[PASS] test_setFeed_byNonAdmin_reverts() (gas: 15904)
+[PASS] test_setFeed_revertsOnZeroAddr() (gas: 13261)
+[PASS] test_unregisteredFeed_reverts() (gas: 11346)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 811.50µs (321.60µs CPU time)
+
+Ran 16 tests for test/unit/GameItems.t.sol:GameItemsUnitTest
+[PASS] test_burn_byHolder() (gas: 105836)
+[PASS] test_burn_revertsWithoutApproval() (gas: 104318)
+[PASS] test_craft_insufficientResource() (gas: 197588)
+[PASS] test_craft_revertsOnInactive() (gas: 25369)
+[PASS] test_initialize_doubleCallReverts() (gas: 19060)
+[PASS] test_mint_byMinter() (gas: 100366)
+[PASS] test_mint_outOfRangeReverts() (gas: 23596)
+[PASS] test_mint_revertsWhenUnauthorized() (gas: 21532)
+[PASS] test_pause_blocksMint() (gas: 46946)
+[PASS] test_removeRecipe() (gas: 173858)
+[PASS] test_setRecipe_andCraft() (gas: 477348)
+[PASS] test_setRecipe_revertsOnLengthMismatch() (gas: 20838)
+[PASS] test_setTokenURI_overrides() (gas: 46346)
+[PASS] test_supportsInterface() (gas: 13619)
+[PASS] test_upgrade_revertsForNonUpgrader() (gas: 3074859)
+[PASS] test_upgrade_toV2() (gas: 3082800)
+Suite result: ok. 16 passed; 0 failed; 0 skipped; finished in 1.84ms (1.06ms CPU time)
+
+Ran 4 tests for test/unit/ItemFactory.t.sol:ItemFactoryUnitTest
+[PASS] test_create2_isDeterministic() (gas: 286021)
+[PASS] test_create2_revertsOnDuplicateSalt() (gas: 1040438765)
+[PASS] test_create_deploysProxy() (gas: 280224)
+[PASS] test_unauthorized_reverts() (gas: 17119)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 815.80µs (400.10µs CPU time)
+
+Ran 4 tests for test/unit/GameItemsV2.t.sol:GameItemsV2UnitTest
+[PASS] test_craftWithDiscount_revertsWithoutProof() (gas: 38001)
+[PASS] test_setCraftDiscountBps_andDiscountedCraft() (gas: 463678)
+[PASS] test_setDiscount_revertsAboveMax() (gas: 30725)
+[PASS] test_storage_preservedAcrossUpgrade() (gas: 289957)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 1.32ms (495.90µs CPU time)
+
+Ran 1 test for test/security/Reentrancy.t.sol:ReentrancyTest
+[PASS] test_reentrancyDefended_byNonReentrantGuard() (gas: 1089277)
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 1.51ms (564.50µs CPU time)
+
+Ran 13 tests for test/unit/ResourceAMM.t.sol:ResourceAMMUnitTest
+[PASS] test_addLiquidity_initialMint() (gas: 230893)
+[PASS] test_addLiquidity_proportional() (gas: 278286)
+[PASS] test_constructor_sortsTokens() (gas: 9783)
+[PASS] test_getAmountOut_revertsOnZeroReserves() (gas: 8719)
+[PASS] test_initialMint_revertsBelowMinLiquidity() (gas: 120102)
+[PASS] test_kInvariant_holdsAfterSwap() (gas: 253561)
+[PASS] test_quote_works() (gas: 9087)
+[PASS] test_removeLiquidity_returnsTokens() (gas: 339437)
+[PASS] test_removeLiquidity_slippageRevert() (gas: 257114)
+[PASS] test_swap_exactInput() (gas: 297053)
+[PASS] test_swap_revertsOnInvalidToken() (gas: 232870)
+[PASS] test_swap_revertsOnSlippage() (gas: 256608)
+[PASS] test_swap_revertsOnZeroInput() (gas: 232482)
+Suite result: ok. 13 passed; 0 failed; 0 skipped; finished in 2.43ms (1.78ms CPU time)
+
+Ran 7 tests for test/unit/LootBox.t.sol:LootBoxUnitTest
+[PASS] test_open_andFulfill() (gas: 233167)
+[PASS] test_open_revertsWhenNoRewards() (gas: 46181)
+[PASS] test_open_revertsWhenPaused() (gas: 42826)
+[PASS] test_open_revertsWithoutKey() (gas: 81422)
+[PASS] test_secondReward_pickedAtHighWord() (gas: 239481)
+[PASS] test_setKeyItem_burnsOnOpen() (gas: 370787)
+[PASS] test_setRewards_revertsForNonAdmin() (gas: 12250)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 1.11ms (511.00µs CPU time)
+
+Ran 10 tests for test/unit/GameToken.t.sol:GameTokenUnitTest
+[PASS] test_burn_reducesSupply() (gas: 69673)
+[PASS] test_clock_isTimestamp() (gas: 12005)
+[PASS] test_delegate_grantsVotingPower() (gas: 87633)
+[PASS] test_metadata() (gas: 28017)
+[PASS] test_mint_byMinter() (gas: 59210)
+[PASS] test_mint_revertsAtCap() (gas: 18270)
+[PASS] test_mint_revertsWhenNotMinter() (gas: 13562)
+[PASS] test_pastVotes() (gas: 88368)
+[PASS] test_permit_works() (gas: 105535)
+[PASS] test_revokeMinter() (gas: 24235)
+Suite result: ok. 10 passed; 0 failed; 0 skipped; finished in 2.31ms (1.85ms CPU time)
+
+Ran 10 tests for test/unit/RentalVault.t.sol:RentalVaultUnitTest
+[PASS] test_cancel_returnsItems() (gas: 266648)
+[PASS] test_cancel_revertsForNonOwner() (gas: 283792)
+[PASS] test_claimPayout_pullsFunds() (gas: 462846)
+[PASS] test_endRental_returnsToOwner() (gas: 447944)
+[PASS] test_endRental_revertsBeforeExpiry() (gas: 450848)
+[PASS] test_list_escrowsItems() (gas: 280211)
+[PASS] test_pause_blocksList() (gas: 76048)
+[PASS] test_rent_paysAndForwards() (gas: 453562)
+[PASS] test_rent_revertsOnInvalidDuration() (gas: 312002)
+[PASS] test_setProtocolFee_revertsAboveCap() (gas: 11475)
+Suite result: ok. 10 passed; 0 failed; 0 skipped; finished in 2.05ms (1.18ms CPU time)
+
+Ran 3 tests for test/gas/MathBench.t.sol:MathBenchTest
+[PASS] test_gasSnapshot() (gas: 21562)
+Logs:
+  yul.sqrt gas: 5790
+  pure.sqrt gas: 6083
+  yul.mulDiv gas: 852
+  pure.mulDiv gas: 748
+
+[PASS] test_mulDiv_equivalence(uint128,uint128,uint128) (runs: 512, μ: 14078, ~: 14294)
+[PASS] test_sqrt_equivalence(uint256) (runs: 512, μ: 18259, ~: 18187)
+Logs:
+  Bound result 2896754432835816878985
+
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 73.38ms (91.82ms CPU time)
+
+Ran 8 tests for test/unit/YieldVault.t.sol:YieldVaultUnitTest
+[PASS] test_decimalsOffset() (gas: 8959)
+[PASS] test_deposit_mintsShares() (gas: 127996)
+[PASS] test_inflationAttack_mitigated() (gas: 130181)
+[PASS] test_metadata() (gas: 21054)
+[PASS] test_notifyRewards_increasesPricePerShare() (gas: 186868)
+[PASS] test_pause_blocksDeposits() (gas: 67603)
+[PASS] test_unauthorizedReward_reverts() (gas: 86424)
+[PASS] test_withdraw_returnsAssets() (gas: 156424)
+Suite result: ok. 8 passed; 0 failed; 0 skipped; finished in 1.53ms (638.60µs CPU time)
+
+Ran 2 tests for test/fuzz/Voting.fuzz.t.sol:VotingFuzzTest
+[PASS] testFuzz_transferUpdatesVotes(uint96) (runs: 512, μ: 247278, ~: 250449)
+Logs:
+  Bound result 218198921
+
+[PASS] testFuzz_votingPowerEqualsBalance_afterDelegate(address,uint96) (runs: 512, μ: 124935, ~: 124909)
+Logs:
+  Bound result 6774
+
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 78.63ms (118.78ms CPU time)
+
+Ran 2 tests for test/fuzz/Crafting.fuzz.t.sol:CraftingFuzzTest
+[PASS] testFuzz_craftBurnsAndMintsCorrectly(uint16) (runs: 512, μ: 223053, ~: 223052)
+[PASS] testFuzz_craft_revertsIfShort(uint16,uint16) (runs: 512, μ: 150696, ~: 168098)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 149.95ms (166.72ms CPU time)
+
+Ran 4 tests for test/fuzz/AMM.fuzz.t.sol:AMMFuzzTest
+[PASS] testFuzz_addLiquidity_returnsLP(uint256,uint256) (runs: 512, μ: 102630, ~: 102647)
+Logs:
+  Bound result 1000000000000003
+  Bound result 761602337190121540661
+
+[PASS] testFuzz_getAmountOut_neverExceedsReserves(uint256) (runs: 512, μ: 12266, ~: 12159)
+Logs:
+  Bound result 2896754432835816878985
+
+[PASS] testFuzz_quote_isMonotonic(uint256) (runs: 512, μ: 12601, ~: 12496)
+Logs:
+  Bound result 2896754432835816878985
+
+[PASS] testFuzz_swap_kNeverDecreases(uint256,bool) (runs: 512, μ: 136229, ~: 136151)
+Logs:
+  Bound result 49669241714730491405
+
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 150.30ms (217.65ms CPU time)
+
+Ran 1 test for test/fork/ArbSepolia.fork.t.sol:ArbSepoliaForkTest
+[PASS] test_PriceOracle_arbSepolia() (gas: 664841)
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 2.31s (1.58s CPU time)
+
+Ran 3 tests for test/invariant/AMM.invariant.t.sol:AMMInvariantTest
+[PASS] invariant_kNeverDecreases() (runs: 256, calls: 16384, reverts: 10818)
+
+╭------------+-----------+-------+---------+----------╮
+| Contract   | Selector  | Calls | Reverts | Discards |
++=====================================================+
+| AMMHandler | addLiq    | 5566  | 0       | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapAforB | 5375  | 5375    | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapBforA | 5443  | 5443    | 0        |
+╰------------+-----------+-------+---------+----------╯
+
+Logs:
+  Bound result 99999000000000012346
+  Bound result 99999000000000000134
+  Bound result 99999000003652614695
+  Bound result 99999000000000003499
+  Bound result 99999000000000000351
+  Bound result 99999000000019716476
+  Bound result 99999000000000001012
+  Bound result 4999999999499995
+  Bound result 99999017134086900863
+  Bound result 99999000000008952481
+  Bound result 91574130134663956095
+  Bound result 78805492199622266679
+  Bound result 99999000000054417947
+  Bound result 77099253761103931799
+  Bound result 99999000000000604801
+  Bound result 4999999999499995
+  Bound result 99999000000000002274
+  Bound result 999999999999999000
+  Bound result 99999000000000000201
+  Bound result 99999000000000001223
+  Bound result 93935497944799275572
+  Bound result 51516245141845322526
+  Bound result 99999000000000009193
+  Bound result 99999000000000000037
+  Bound result 69267682611922855501
+  Bound result 67860258035576592009
+  Bound result 99999000000000001810
+  Bound result 99999000000000000021
+  Bound result 15353112330752224263
+  Bound result 58526867269054307179
+  Bound result 24190261853867336749
+  Bound result 73351540667978308695
+  Bound result 99999000000000000104
+  Bound result 90621354979858112039
+  Bound result 23190644922854945555
+  Bound result 80209058416344135966
+  Bound result 23579999999998765420
+  Bound result 99999000000000006845
+  Bound result 17324971501224934
+  Bound result 17357252203148327648
+  Bound result 59329034903959611679
+  Bound result 46009694951770320314
+  Bound result 99999000000000000101
+  Bound result 99999000000000000129
+
+[PASS] invariant_lpSupplyNonZero() (runs: 256, calls: 16384, reverts: 10818)
+
+╭------------+-----------+-------+---------+----------╮
+| Contract   | Selector  | Calls | Reverts | Discards |
++=====================================================+
+| AMMHandler | addLiq    | 5566  | 0       | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapAforB | 5375  | 5375    | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapBforA | 5443  | 5443    | 0        |
+╰------------+-----------+-------+---------+----------╯
+
+Logs:
+  Bound result 99999000000000012346
+  Bound result 99999000000000000134
+  Bound result 99999000003652614695
+  Bound result 99999000000000003499
+  Bound result 99999000000000000351
+  Bound result 99999000000019716476
+  Bound result 99999000000000001012
+  Bound result 4999999999499995
+  Bound result 99999017134086900863
+  Bound result 99999000000008952481
+  Bound result 91574130134663956095
+  Bound result 78805492199622266679
+  Bound result 99999000000054417947
+  Bound result 77099253761103931799
+  Bound result 99999000000000604801
+  Bound result 4999999999499995
+  Bound result 99999000000000002274
+  Bound result 999999999999999000
+  Bound result 99999000000000000201
+  Bound result 99999000000000001223
+  Bound result 93935497944799275572
+  Bound result 51516245141845322526
+  Bound result 99999000000000009193
+  Bound result 99999000000000000037
+  Bound result 69267682611922855501
+  Bound result 67860258035576592009
+  Bound result 99999000000000001810
+  Bound result 99999000000000000021
+  Bound result 15353112330752224263
+  Bound result 58526867269054307179
+  Bound result 24190261853867336749
+  Bound result 73351540667978308695
+  Bound result 99999000000000000104
+  Bound result 90621354979858112039
+  Bound result 23190644922854945555
+  Bound result 80209058416344135966
+  Bound result 23579999999998765420
+  Bound result 99999000000000006845
+  Bound result 17324971501224934
+  Bound result 17357252203148327648
+  Bound result 59329034903959611679
+  Bound result 46009694951770320314
+  Bound result 99999000000000000101
+  Bound result 99999000000000000129
+
+[PASS] invariant_reservesMatchBalances() (runs: 256, calls: 16384, reverts: 10818)
+
+╭------------+-----------+-------+---------+----------╮
+| Contract   | Selector  | Calls | Reverts | Discards |
++=====================================================+
+| AMMHandler | addLiq    | 5566  | 0       | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapAforB | 5375  | 5375    | 0        |
+|------------+-----------+-------+---------+----------|
+| AMMHandler | swapBforA | 5443  | 5443    | 0        |
+╰------------+-----------+-------+---------+----------╯
+
+Logs:
+  Bound result 99999000000000012346
+  Bound result 99999000000000000134
+  Bound result 99999000003652614695
+  Bound result 99999000000000003499
+  Bound result 99999000000000000351
+  Bound result 99999000000019716476
+  Bound result 99999000000000001012
+  Bound result 4999999999499995
+  Bound result 99999017134086900863
+  Bound result 99999000000008952481
+  Bound result 91574130134663956095
+  Bound result 78805492199622266679
+  Bound result 99999000000054417947
+  Bound result 77099253761103931799
+  Bound result 99999000000000604801
+  Bound result 4999999999499995
+  Bound result 99999000000000002274
+  Bound result 999999999999999000
+  Bound result 99999000000000000201
+  Bound result 99999000000000001223
+  Bound result 93935497944799275572
+  Bound result 51516245141845322526
+  Bound result 99999000000000009193
+  Bound result 99999000000000000037
+  Bound result 69267682611922855501
+  Bound result 67860258035576592009
+  Bound result 99999000000000001810
+  Bound result 99999000000000000021
+  Bound result 15353112330752224263
+  Bound result 58526867269054307179
+  Bound result 24190261853867336749
+  Bound result 73351540667978308695
+  Bound result 99999000000000000104
+  Bound result 90621354979858112039
+  Bound result 23190644922854945555
+  Bound result 80209058416344135966
+  Bound result 23579999999998765420
+  Bound result 99999000000000006845
+  Bound result 17324971501224934
+  Bound result 17357252203148327648
+  Bound result 59329034903959611679
+  Bound result 46009694951770320314
+  Bound result 99999000000000000101
+  Bound result 99999000000000000129
+
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 2.82s (8.03s CPU time)
+
+Ran 1 test for test/invariant/Vault.invariant.t.sol:VaultInvariantTest
+[PASS] invariant_solvent() (runs: 256, calls: 16384, reverts: 192)
+
+╭--------------+----------+-------+---------+----------╮
+| Contract     | Selector | Calls | Reverts | Discards |
++======================================================+
+| VaultHandler | deposit  | 8177  | 192     | 0        |
+|--------------+----------+-------+---------+----------|
+| VaultHandler | withdraw | 8207  | 0       | 0        |
+╰--------------+----------+-------+---------+----------╯
+
+Logs:
+  Bound result 1374
+  Bound result 249755779
+  Bound result 90396249024470818647630
+  Bound result 1000
+  Bound result 91261112656185458184440
+  Bound result 205
+  Bound result 214224105575777862786137
+  Bound result 434909650124969701064574
+  Bound result 69393288462358677826652
+  Bound result 68011648335
+  Bound result 559
+  Bound result 193679295636539741139200401345
+  Bound result 121795412466608836915017
+  Bound result 166303334645694663251916
+  Bound result 1438243633029623042997
+  Bound result 3429695021015687721715
+  Bound result 540062063924261787129
+  Bound result 955339208346
+  Bound result 51966
+  Bound result 926322337545847618996934044596
+  Bound result 1712
+  Bound result 4242970872
+  Bound result 120981784954216652
+  Bound result 60000000000000000000
+  Bound result 411593931718043419890743
+  Bound result 309973974964793685362182789006
+  Bound result 533776821786611711864043
+  Bound result 1000000000000000000000000
+  Bound result 500000000000000000000
+  Bound result 258700535804615886180335381047
+  Bound result 29572479754898
+  Bound result 261354340938462111470437
+  Bound result 100000000000000000000
+  Bound result 5000
+  Bound result 707807221956389507738111409236
+  Bound result 2068559315584064317037719158
+  Bound result 1000000
+  Bound result 45
+  Bound result 90000000000000000000
+  Bound result 152777875263793871353962
+  Bound result 153487100510096964109243066864
+  Bound result 2
+  Bound result 0
+  Bound result 971869379058879942975542
+  Bound result 1
+  Bound result 460908014510634532217611155356
+  Bound result 9999
+  Bound result 17626461297150179965
+  Bound result 21
+  Bound result 54263366
+  Bound result 16965109614013797519884125236
+  Bound result 7112115075864323580285236903
+  Bound result 187
+  Bound result 79461854015599444470184038
+  Bound result 31483023526289052410322
+  Bound result 570282830563201530174510
+  Bound result 5265701336936
+  Bound result 423
+  Bound result 20
+  Bound result 1772367041505626927
+  Bound result 104484878651879441055781850283
+  Bound result 2000000000000000000000
+  Bound result 50636737653611712453120
+  Bound result 458006058861301053866239
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 3.08s (3.08s CPU time)
+
+Ran 3 tests for test/fuzz/Vault.fuzz.t.sol:VaultFuzzTest
+[PASS] testFuzz_assetsToShares_roundtrip(uint256) (runs: 512, μ: 23022, ~: 22916)
+Logs:
+  Bound result 2896754432835816878985
+
+[PASS] testFuzz_deposit_neverMintsMoreSharesThanPreview(uint256) (runs: 512, μ: 131622, ~: 131561)
+Logs:
+  Bound result 2896754432835816878985
+
+[PASS] testFuzz_deposit_redeem_roundsConservatively(uint256) (runs: 512, μ: 158316, ~: 158327)
+Logs:
+  Bound result 943800710176313686629166
+
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 3.12s (167.76ms CPU time)
+
+Ran 2 tests for test/invariant/Token.invariant.t.sol:TokenInvariantTest
+[PASS] invariant_totalSupplyConsistent() (runs: 256, calls: 16384, reverts: 0)
+
+╭--------------+----------+-------+---------+----------╮
+| Contract     | Selector | Calls | Reverts | Discards |
++======================================================+
+| TokenHandler | burn     | 8261  | 0       | 0        |
+|--------------+----------+-------+---------+----------|
+| TokenHandler | transfer | 8123  | 0       | 0        |
+╰--------------+----------+-------+---------+----------╯
+
+Logs:
+  Bound result 2
+  Bound result 0
+  Bound result 1805
+  Bound result 0
+  Bound result 0
+  Bound result 4177
+  Bound result 1
+  Bound result 1638
+  Bound result 2
+  Bound result 395081769521862485
+  Bound result 0
+  Bound result 0
+  Bound result 62514264337592113090849
+  Bound result 1
+  Bound result 1
+  Bound result 285241
+  Bound result 2
+  Bound result 0
+  Bound result 27980433861316590694508
+  Bound result 2
+  Bound result 11491993418924714808
+  Bound result 2
+  Bound result 1
+  Bound result 131424411910
+  Bound result 1
+  Bound result 8722
+  Bound result 0
+  Bound result 2
+  Bound result 6154661460
+  Bound result 2
+  Bound result 1
+  Bound result 7649
+  Bound result 0
+  Bound result 1
+  Bound result 91017314438158675050677
+  Bound result 0
+  Bound result 2
+  Bound result 243126557534646552158
+  Bound result 0
+  Bound result 0
+  Bound result 6200479767235210307701
+  Bound result 0
+  Bound result 0
+  Bound result 219
+  Bound result 1
+  Bound result 2
+  Bound result 1765669698964772557
+  Bound result 2
+  Bound result 1147
+  Bound result 1
+  Bound result 1
+  Bound result 550
+  Bound result 0
+  Bound result 2
+  Bound result 1551471995561573
+  Bound result 2
+  Bound result 0
+  Bound result 7317
+  Bound result 0
+  Bound result 2
+  Bound result 273
+  Bound result 0
+  Bound result 7586
+  Bound result 0
+  Bound result 2
+  Bound result 30153221728366807397579
+  Bound result 0
+  Bound result 2
+  Bound result 2541
+  Bound result 1
+  Bound result 0
+  Bound result 495790613314
+  Bound result 0
+  Bound result 2272
+  Bound result 0
+  Bound result 966
+  Bound result 0
+  Bound result 0
+  Bound result 8449
+  Bound result 0
+  Bound result 2
+  Bound result 9057
+  Bound result 1
+  Bound result 1563
+  Bound result 2
+  Bound result 99
+  Bound result 0
+  Bound result 0
+  Bound result 4411437999682886948
+  Bound result 2
+  Bound result 0
+  Bound result 45
+  Bound result 0
+  Bound result 3852560638448937851
+  Bound result 0
+  Bound result 8495798499675955682
+  Bound result 1
+  Bound result 951805037707791
+  Bound result 1
+  Bound result 2
+  Bound result 4607
+  Bound result 1
+  Bound result 2
+  Bound result 25
+  Bound result 1
+  Bound result 1
+  Bound result 3681
+  Bound result 2
+  Bound result 232960386943457417
+  Bound result 1
+  Bound result 1
+  Bound result 2
+  Bound result 1747
+  Bound result 0
+  Bound result 0
+  Bound result 3134998655
+  Bound result 0
+  Bound result 1
+  Bound result 2119543055560105087958
+  Bound result 1
+  Bound result 722779053207445914156
+  Bound result 0
+  Bound result 4173233756802064089017
+  Bound result 2
+  Bound result 2
+  Bound result 2390
+  Bound result 1
+  Bound result 0
+  Bound result 502
+  Bound result 0
+  Bound result 3531122408246
+  Bound result 0
+  Bound result 1
+  Bound result 2397
+  Bound result 1
+  Bound result 1
+  Bound result 6204
+  Bound result 0
+  Bound result 834712955990047138
+  Bound result 2
+  Bound result 2
+  Bound result 4228666474
+  Bound result 0
+  Bound result 323
+  Bound result 2
+  Bound result 0
+  Bound result 0
+  Bound result 0
+  Bound result 0
+  Bound result 791671134
+  Bound result 0
+  Bound result 2
+  Bound result 3
+  Bound result 1
+  Bound result 0
+  Bound result 99999999999999999998195
+  Bound result 0
+  Bound result 907452727697
+  Bound result 0
+  Bound result 0
+  Bound result 175234818
+  Bound result 0
+  Bound result 0
+  Bound result 3430467466
+  Bound result 0
+  Bound result 1
+  Bound result 1890
+  Bound result 2
+  Bound result 51663412959015703968314
+
+[PASS] invariant_votesNeverExceedSupply() (runs: 256, calls: 16384, reverts: 0)
+
+╭--------------+----------+-------+---------+----------╮
+| Contract     | Selector | Calls | Reverts | Discards |
++======================================================+
+| TokenHandler | burn     | 8261  | 0       | 0        |
+|--------------+----------+-------+---------+----------|
+| TokenHandler | transfer | 8123  | 0       | 0        |
+╰--------------+----------+-------+---------+----------╯
+
+Logs:
+  Bound result 2
+  Bound result 0
+  Bound result 1805
+  Bound result 0
+  Bound result 2
+  Bound result 4177
+  Bound result 1
+  Bound result 1638
+  Bound result 2
+  Bound result 395081769521862485
+  Bound result 0
+  Bound result 0
+  Bound result 62514264337595422448586
+  Bound result 1
+  Bound result 1
+  Bound result 285241
+  Bound result 2
+  Bound result 0
+  Bound result 27980433861316580160114
+  Bound result 2
+  Bound result 11491993418924714808
+  Bound result 2
+  Bound result 1
+  Bound result 131424411910
+  Bound result 1
+  Bound result 8732
+  Bound result 0
+  Bound result 2
+  Bound result 6154661460
+  Bound result 1
+  Bound result 0
+  Bound result 7553
+  Bound result 0
+  Bound result 1
+  Bound result 91017314438158685581695
+  Bound result 0
+  Bound result 2
+  Bound result 243126557534646552158
+  Bound result 0
+  Bound result 0
+  Bound result 6200479767235210307701
+  Bound result 0
+  Bound result 0
+  Bound result 379
+  Bound result 1
+  Bound result 2
+  Bound result 1765669698964772557
+  Bound result 2
+  Bound result 1163
+  Bound result 2
+  Bound result 1
+  Bound result 4039
+  Bound result 0
+  Bound result 2
+  Bound result 1551471995561573
+  Bound result 1
+  Bound result 0
+  Bound result 9326
+  Bound result 0
+  Bound result 2
+  Bound result 273
+  Bound result 0
+  Bound result 7586
+  Bound result 2
+  Bound result 2
+  Bound result 6029
+  Bound result 0
+  Bound result 2
+  Bound result 2736
+  Bound result 2
+  Bound result 0
+  Bound result 59707915133874151380545
+  Bound result 2
+  Bound result 2369
+  Bound result 2
+  Bound result 1093
+  Bound result 0
+  Bound result 0
+  Bound result 8721
+  Bound result 0
+  Bound result 2
+  Bound result 9267
+  Bound result 2
+  Bound result 1883
+  Bound result 2
+  Bound result 101
+  Bound result 0
+  Bound result 0
+  Bound result 4411437999682886948
+  Bound result 2
+  Bound result 0
+  Bound result 45
+  Bound result 0
+  Bound result 3852560638448937851
+  Bound result 0
+  Bound result 8495798499675955682
+  Bound result 1
+  Bound result 951805037707791
+  Bound result 1
+  Bound result 2
+  Bound result 5138
+  Bound result 1
+  Bound result 2
+  Bound result 25
+  Bound result 1
+  Bound result 2
+  Bound result 3683
+  Bound result 2
+  Bound result 232960386943457417
+  Bound result 1
+  Bound result 1
+  Bound result 2
+  Bound result 4255
+  Bound result 0
+  Bound result 0
+  Bound result 3134998655
+  Bound result 0
+  Bound result 1
+  Bound result 83897328255395533649142
+  Bound result 1
+  Bound result 722779053207445914156
+  Bound result 0
+  Bound result 10497077697776641381975
+  Bound result 2
+  Bound result 0
+  Bound result 1525202252083907348319
+  Bound result 2
+  Bound result 0
+  Bound result 496
+  Bound result 0
+  Bound result 3531122408246
+  Bound result 0
+  Bound result 1
+  Bound result 2574
+  Bound result 1
+  Bound result 1
+  Bound result 6260
+  Bound result 0
+  Bound result 834712955990047138
+  Bound result 2
+  Bound result 0
+  Bound result 4228666473
+  Bound result 0
+  Bound result 323
+  Bound result 2
+  Bound result 0
+  Bound result 0
+  Bound result 1
+  Bound result 0
+  Bound result 532
+  Bound result 0
+  Bound result 2
+  Bound result 3
+  Bound result 1
+  Bound result 0
+  Bound result 62514264337595422448586
+  Bound result 0
+  Bound result 907452727697
+  Bound result 0
+  Bound result 0
+  Bound result 175234818
+  Bound result 0
+  Bound result 0
+  Bound result 3430467466
+  Bound result 0
+  Bound result 1
+  Bound result 1953
+  Bound result 2
+  Bound result 33540518
+
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 3.13s (5.14s CPU time)
+
+Ran 1 test for test/fork/Mainnet.fork.t.sol:MainnetForkTest
+[FAIL: vm.createSelectFork: could not instantiate forked environment with provider eth.llamarpc.com; HTTP error 522 with body: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head>
+
+<title>llamarpc.com | 522: Connection timed out</title>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" id="cf_styles-css" href="/cdn-cgi/styles/main.css" />
+</head>
+<body>
+<div id="cf-wrapper">
+    <div id="cf-error-details" class="p-0">
+        <header class="mx-auto pt-10 lg:pt-6 lg:px-8 w-240 lg:w-full mb-8">
+            <h1 class="inline-block sm:block sm:mb-2 font-light text-60 lg:text-4xl text-black-dark leading-tight mr-2">
+                <span class="inline-block">Connection timed out</span>
+                <span class="code-label">Error code 522</span>
+            </h1>
+            <div>
+                Visit <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_522&utm_campaign=eth.llamarpc.com" target="_blank" rel="noopener noreferrer">cloudflare.com</a> for more information.
+            </div>
+            <div class="mt-3">2026-05-16 12:44:48 UTC</div>
+        </header>
+        <div class="my-8 bg-gradient-gray">
+            <div class="w-240 lg:w-full mx-auto">
+                <div class="clearfix md:px-8">
+                    <div id="cf-browser-status" class=" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    
+    <span class="cf-icon-browser block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    
+  </div>
+  <span class="md:block w-full truncate">You</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  
+    Browser
+  
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-green-success">Working</span>
+  
+</div>
+                    <div id="cf-cloudflare-status" class=" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_522&#38;utm_campaign=eth.llamarpc.com" target="_blank" rel="noopener noreferrer">
+    <span class="cf-icon-cloud block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    </a>
+  </div>
+  <span class="md:block w-full truncate">Aktobe</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_522&utm_campaign=eth.llamarpc.com" target="_blank" rel="noopener noreferrer">
+    Cloudflare
+  </a>
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-green-success">Working</span>
+  
+</div>
+                    <div id="cf-host-status" class="cf-error-source relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    
+    <span class="cf-icon-server block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-error w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    
+  </div>
+  <span class="md:block w-full truncate">eth.llamarpc.com</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  
+    Host
+  
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-red-error">Error</span>
+  
+</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-240 lg:w-full mx-auto mb-8 lg:px-8">
+            <div class="clearfix">
+                <div class="w-1/2 md:w-full float-left pr-6 md:pb-10 md:pr-0 leading-relaxed">
+                    <h2 class="text-3xl font-normal leading-1.3 mb-4">What happened?</h2>
+                    <p>The initial connection between Cloudflare's network and the origin web server timed out. As a result, the web page can not be displayed.</p>
+                </div>
+                <div class="w-1/2 md:w-full float-left leading-relaxed">
+                    <h2 class="text-3xl font-normal leading-1.3 mb-4">What can I do?</h2>
+                    
+                <h3 class="text-15 font-semibold mb-2">If you're a visitor of this website:</h3>
+                <p class="mb-6">Please try again in a few minutes.</p>
+
+                <h3 class="text-15 font-semibold mb-2">If you're the owner of this website:</h3>
+                <p><span>Contact your hosting provider letting them know your web server is not completing requests. An Error 522 means that the request was able to connect to your web server, but that the request didn't finish. The most likely cause is that something on your server is hogging resources.</span> <a rel="noopener noreferrer" href="https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/">Additional troubleshooting information here.</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cf-error-footer cf-wrapper w-240 lg:w-full py-10 sm:py-4 sm:px-8 mx-auto text-center sm:text-left border-solid border-0 border-t border-gray-300">
+    <p class="text-13">
+      <span class="cf-footer-item sm:block sm:mb-1">Cloudflare Ray ID: <strong class="font-semibold">9fca7957af19eb49</strong></span>
+      <span class="cf-footer-separator sm:hidden">&bull;</span>
+      <span id="cf-footer-item-ip" class="cf-footer-item hidden sm:block sm:mb-1">
+        Your IP:
+        <button type="button" id="cf-footer-ip-reveal" class="cf-footer-ip-reveal-btn">Click to reveal</button>
+        <span class="hidden" id="cf-footer-ip">2.133.57.122</span>
+        <span class="cf-footer-separator sm:hidden">&bull;</span>
+      </span>
+      <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_522&#38;utm_campaign=eth.llamarpc.com" id="brand_link" target="_blank">Cloudflare</a></span>
+      
+    </p>
+    <script>(function(){function d(){var b=a.getElementById("cf-footer-item-ip"),c=a.getElementById("cf-footer-ip-reveal");b&&"classList"in b&&(b.classList.remove("hidden"),c.addEventListener("click",function(){c.classList.add("hidden");a.getElementById("cf-footer-ip").classList.remove("hidden")}))}var a=document;document.addEventListener&&a.addEventListener("DOMContentLoaded",d)})();</script>
+  </div><!-- /.error-footer -->
+
+    </div>
+</div>
+</body>
+</html>
+
+HTTP diagnostics:
+cf-ray: 9fca7957af19eb49-AKX
+server: cloudflare] setUp() (gas: 0)
+Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 19.48s (0.00ns CPU time)
+
+Ran 22 test suites in 19.48s (34.41s CPU time): 110 tests passed, 1 failed, 0 skipped (111 total tests)
+
+Failing tests:
+Encountered 1 failing test in test/fork/Mainnet.fork.t.sol:MainnetForkTest
+[FAIL: vm.createSelectFork: could not instantiate forked environment with provider eth.llamarpc.com; HTTP error 522 with body: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head>
+
+<title>llamarpc.com | 522: Connection timed out</title>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" id="cf_styles-css" href="/cdn-cgi/styles/main.css" />
+</head>
+<body>
+<div id="cf-wrapper">
+    <div id="cf-error-details" class="p-0">
+        <header class="mx-auto pt-10 lg:pt-6 lg:px-8 w-240 lg:w-full mb-8">
+            <h1 class="inline-block sm:block sm:mb-2 font-light text-60 lg:text-4xl text-black-dark leading-tight mr-2">
+                <span class="inline-block">Connection timed out</span>
+                <span class="code-label">Error code 522</span>
+            </h1>
+            <div>
+                Visit <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_522&utm_campaign=eth.llamarpc.com" target="_blank" rel="noopener noreferrer">cloudflare.com</a> for more information.
+            </div>
+            <div class="mt-3">2026-05-16 12:44:48 UTC</div>
+        </header>
+        <div class="my-8 bg-gradient-gray">
+            <div class="w-240 lg:w-full mx-auto">
+                <div class="clearfix md:px-8">
+                    <div id="cf-browser-status" class=" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    
+    <span class="cf-icon-browser block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    
+  </div>
+  <span class="md:block w-full truncate">You</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  
+    Browser
+  
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-green-success">Working</span>
+  
+</div>
+                    <div id="cf-cloudflare-status" class=" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_522&#38;utm_campaign=eth.llamarpc.com" target="_blank" rel="noopener noreferrer">
+    <span class="cf-icon-cloud block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    </a>
+  </div>
+  <span class="md:block w-full truncate">Aktobe</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_522&utm_campaign=eth.llamarpc.com" target="_blank" rel="noopener noreferrer">
+    Cloudflare
+  </a>
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-green-success">Working</span>
+  
+</div>
+                    <div id="cf-host-status" class="cf-error-source relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    
+    <span class="cf-icon-server block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-error w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    
+  </div>
+  <span class="md:block w-full truncate">eth.llamarpc.com</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  
+    Host
+  
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-red-error">Error</span>
+  
+</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-240 lg:w-full mx-auto mb-8 lg:px-8">
+            <div class="clearfix">
+                <div class="w-1/2 md:w-full float-left pr-6 md:pb-10 md:pr-0 leading-relaxed">
+                    <h2 class="text-3xl font-normal leading-1.3 mb-4">What happened?</h2>
+                    <p>The initial connection between Cloudflare's network and the origin web server timed out. As a result, the web page can not be displayed.</p>
+                </div>
+                <div class="w-1/2 md:w-full float-left leading-relaxed">
+                    <h2 class="text-3xl font-normal leading-1.3 mb-4">What can I do?</h2>
+                    
+                <h3 class="text-15 font-semibold mb-2">If you're a visitor of this website:</h3>
+                <p class="mb-6">Please try again in a few minutes.</p>
+
+                <h3 class="text-15 font-semibold mb-2">If you're the owner of this website:</h3>
+                <p><span>Contact your hosting provider letting them know your web server is not completing requests. An Error 522 means that the request was able to connect to your web server, but that the request didn't finish. The most likely cause is that something on your server is hogging resources.</span> <a rel="noopener noreferrer" href="https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/">Additional troubleshooting information here.</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cf-error-footer cf-wrapper w-240 lg:w-full py-10 sm:py-4 sm:px-8 mx-auto text-center sm:text-left border-solid border-0 border-t border-gray-300">
+    <p class="text-13">
+      <span class="cf-footer-item sm:block sm:mb-1">Cloudflare Ray ID: <strong class="font-semibold">9fca7957af19eb49</strong></span>
+      <span class="cf-footer-separator sm:hidden">&bull;</span>
+      <span id="cf-footer-item-ip" class="cf-footer-item hidden sm:block sm:mb-1">
+        Your IP:
+        <button type="button" id="cf-footer-ip-reveal" class="cf-footer-ip-reveal-btn">Click to reveal</button>
+        <span class="hidden" id="cf-footer-ip">2.133.57.122</span>
+        <span class="cf-footer-separator sm:hidden">&bull;</span>
+      </span>
+      <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_522&#38;utm_campaign=eth.llamarpc.com" id="brand_link" target="_blank">Cloudflare</a></span>
+      
+    </p>
+    <script>(function(){function d(){var b=a.getElementById("cf-footer-item-ip"),c=a.getElementById("cf-footer-ip-reveal");b&&"classList"in b&&(b.classList.remove("hidden"),c.addEventListener("click",function(){c.classList.add("hidden");a.getElementById("cf-footer-ip").classList.remove("hidden")}))}var a=document;document.addEventListener&&a.addEventListener("DOMContentLoaded",d)})();</script>
+  </div><!-- /.error-footer -->
+
+    </div>
+</div>
+</body>
+</html>
+
+HTTP diagnostics:
+cf-ray: 9fca7957af19eb49-AKX
+server: cloudflare] setUp() (gas: 0)
+
+Encountered a total of 1 failing tests, 110 tests succeeded
+
+Tip: Run `forge test --rerun` to retry only the 1 failed test

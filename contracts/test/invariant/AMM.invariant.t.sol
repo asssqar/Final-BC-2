@@ -28,13 +28,13 @@ contract AMMHandler is Test {
     }
 
     function swapAforB(uint256 amount) external {
-        amount = bound(amount, 1e15, 1_000e18);
+        amount = bound(amount, 1e15, 1000e18);
         vm.prank(actor);
         amm.swap(address(amm.token0()), amount, 0, actor);
     }
 
     function swapBforA(uint256 amount) external {
-        amount = bound(amount, 1e15, 1_000e18);
+        amount = bound(amount, 1e15, 1000e18);
         vm.prank(actor);
         amm.swap(address(amm.token1()), amount, 0, actor);
     }
@@ -66,8 +66,8 @@ contract AMMInvariantTest is StdInvariant, Test {
         amm = new ResourceAMM(IERC20(address(a)), IERC20(address(b)));
         a.approve(address(amm), type(uint256).max);
         b.approve(address(amm), type(uint256).max);
-        amm.addLiquidity(1_000e18, 1_000e18, 0, 0, address(this));
-        kInitial = uint256(1_000e18) * uint256(1_000e18);
+        amm.addLiquidity(1000e18, 1000e18, 0, 0, address(this));
+        kInitial = uint256(1000e18) * uint256(1000e18);
 
         handler = new AMMHandler(amm, a, b);
         // Forward only handler-public functions

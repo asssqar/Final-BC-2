@@ -24,23 +24,35 @@ import {YulMath} from "../libs/YulMath.sol";
 contract ResourceAMM is ERC20, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
-    uint256 public constant MINIMUM_LIQUIDITY = 1_000;
-    uint256 public constant FEE_NUMERATOR = 997;     // 0.30 % fee → 1000-3
-    uint256 public constant FEE_DENOMINATOR = 1_000;
+    uint256 public constant MINIMUM_LIQUIDITY = 1000;
+    uint256 public constant FEE_NUMERATOR = 997; // 0.30 % fee → 1000-3
+    uint256 public constant FEE_DENOMINATOR = 1000;
 
     IERC20 public immutable token0;
     IERC20 public immutable token1;
 
     uint112 private _reserve0;
     uint112 private _reserve1;
-    uint32  private _blockTimestampLast; // optional analytics, not used for pricing
+    uint32 private _blockTimestampLast; // optional analytics, not used for pricing
 
     /// @notice Cumulative product of (reserve0 * reserve1) immediately after the last successful
     ///         swap. Used in invariant tests to prove that k never decreases.
     uint256 public kLast;
 
-    event Mint(address indexed sender, address indexed to, uint256 amount0, uint256 amount1, uint256 liquidity);
-    event Burn(address indexed sender, address indexed to, uint256 amount0, uint256 amount1, uint256 liquidity);
+    event Mint(
+        address indexed sender,
+        address indexed to,
+        uint256 amount0,
+        uint256 amount1,
+        uint256 liquidity
+    );
+    event Burn(
+        address indexed sender,
+        address indexed to,
+        uint256 amount0,
+        uint256 amount1,
+        uint256 liquidity
+    );
     event Swap(
         address indexed sender,
         address indexed to,
@@ -64,7 +76,9 @@ contract ResourceAMM is ERC20, ReentrancyGuard {
         ERC20(_lpName(_token0, _token1), _lpSymbol(_token0, _token1))
     {
         require(address(_token0) != address(_token1), "ResourceAMM: identical tokens");
-        require(address(_token0) != address(0) && address(_token1) != address(0), "ResourceAMM: zero");
+        require(
+            address(_token0) != address(0) && address(_token1) != address(0), "ResourceAMM: zero"
+        );
         // Sort so token0 < token1 deterministically — caller may pass them in any order.
         if (address(_token0) < address(_token1)) {
             token0 = _token0;
@@ -148,12 +162,11 @@ contract ResourceAMM is ERC20, ReentrancyGuard {
         emit Mint(msg.sender, to, amount0, amount1, liquidity);
     }
 
-    function removeLiquidity(
-        uint256 liquidity,
-        uint256 amount0Min,
-        uint256 amount1Min,
-        address to
-    ) external nonReentrant returns (uint256 amount0, uint256 amount1) {
+    function removeLiquidity(uint256 liquidity, uint256 amount0Min, uint256 amount1Min, address to)
+        external
+        nonReentrant
+        returns (uint256 amount0, uint256 amount1)
+    {
         _transfer(msg.sender, address(this), liquidity);
         (amount0, amount1) = _burnLP(to);
         if (amount0 < amount0Min || amount1 < amount1Min) revert SlippageExceeded();
@@ -177,8 +190,8 @@ contract ResourceAMM is ERC20, ReentrancyGuard {
         if (amountIn == 0) revert InsufficientInputAmount();
         if (to == address(this) || to == address(0)) revert InvalidToken();
 
-        (IERC20 inToken, IERC20 outToken, uint112 reserveIn, uint112 reserveOut, bool zeroForOne)
-            = _resolveDirection(tokenIn);
+        (IERC20 inToken, IERC20 outToken, uint112 reserveIn, uint112 reserveOut, bool zeroForOne) =
+            _resolveDirection(tokenIn);
 
         amountOut = getAmountOut(amountIn, reserveIn, reserveOut);
         if (amountOut < amountOutMin) revert SlippageExceeded();
@@ -195,15 +208,21 @@ contract ResourceAMM is ERC20, ReentrancyGuard {
         // Account for fee: reserve_in_after_fee = reserve_in * 1000 - amountIn * 3
         // We assert the constant-product invariant on raw reserves with fee applied.
         if (zeroForOne) {
-            uint256 balance0Adj = balance0 * FEE_DENOMINATOR - amountIn * (FEE_DENOMINATOR - FEE_NUMERATOR);
+            uint256 balance0Adj =
+                balance0 * FEE_DENOMINATOR - amountIn * (FEE_DENOMINATOR - FEE_NUMERATOR);
             uint256 balance1Adj = balance1 * FEE_DENOMINATOR;
-            if (balance0Adj * balance1Adj < uint256(reserveIn) * reserveOut * (FEE_DENOMINATOR ** 2)) {
+            if (
+                balance0Adj * balance1Adj < uint256(reserveIn) * reserveOut * (FEE_DENOMINATOR ** 2)
+            ) {
                 revert KInvariantViolated();
             }
         } else {
-            uint256 balance1Adj = balance1 * FEE_DENOMINATOR - amountIn * (FEE_DENOMINATOR - FEE_NUMERATOR);
+            uint256 balance1Adj =
+                balance1 * FEE_DENOMINATOR - amountIn * (FEE_DENOMINATOR - FEE_NUMERATOR);
             uint256 balance0Adj = balance0 * FEE_DENOMINATOR;
-            if (balance0Adj * balance1Adj < uint256(reserveOut) * reserveIn * (FEE_DENOMINATOR ** 2)) {
+            if (
+                balance0Adj * balance1Adj < uint256(reserveOut) * reserveIn * (FEE_DENOMINATOR ** 2)
+            ) {
                 revert KInvariantViolated();
             }
         }
@@ -220,7 +239,13 @@ contract ResourceAMM is ERC20, ReentrancyGuard {
     function _resolveDirection(address tokenIn)
         internal
         view
-        returns (IERC20 inToken, IERC20 outToken, uint112 reserveIn, uint112 reserveOut, bool zeroForOne)
+        returns (
+            IERC20 inToken,
+            IERC20 outToken,
+            uint112 reserveIn,
+            uint112 reserveOut,
+            bool zeroForOne
+        )
     {
         if (tokenIn == address(token0)) {
             return (token0, token1, _reserve0, _reserve1, true);
@@ -249,8 +274,7 @@ contract ResourceAMM is ERC20, ReentrancyGuard {
             _mint(address(0xdead), MINIMUM_LIQUIDITY);
         } else {
             liquidity = YulMath.min(
-                YulMath.mulDiv(amount0, _totalSupply, r0),
-                YulMath.mulDiv(amount1, _totalSupply, r1)
+                YulMath.mulDiv(amount0, _totalSupply, r0), YulMath.mulDiv(amount1, _totalSupply, r1)
             );
         }
         if (liquidity == 0) revert InsufficientLiquidityMinted();

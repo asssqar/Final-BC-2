@@ -3,11 +3,21 @@ pragma solidity 0.8.24;
 
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import {ERC1155Upgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
-import {ERC1155SupplyUpgradeable} from "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/ERC1155SupplyUpgradeable.sol";
-import {AccessControlUpgradeable} from "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import {PausableUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
-import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
+import {
+    ERC1155Upgradeable
+} from "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol";
+import {
+    ERC1155SupplyUpgradeable
+} from "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/ERC1155SupplyUpgradeable.sol";
+import {
+    AccessControlUpgradeable
+} from "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import {
+    PausableUpgradeable
+} from "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
+import {
+    ReentrancyGuardUpgradeable
+} from "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 
 /// @title GameItems V1
 /// @notice Upgradeable ERC-1155 registry for Aetheria items + crafting.
@@ -38,8 +48,8 @@ contract GameItems is
     /// @notice Token-ID partitioning (state machine).
     /// @dev Resources are fungible, equipment is semi-fungible (high supply rare),
     ///      cosmetics are unique-per-id (totalSupply == 1 enforced by the mint logic).
-    uint256 public constant RESOURCE_RANGE_END = 1_000;          // [0, 1000)
-    uint256 public constant EQUIPMENT_RANGE_END = 100_000;        // [1000, 100_000)
+    uint256 public constant RESOURCE_RANGE_END = 1000; // [0, 1000)
+    uint256 public constant EQUIPMENT_RANGE_END = 100_000; // [1000, 100_000)
     uint256 public constant COSMETIC_RANGE_END = type(uint256).max; // [100_000, ...)
 
     struct Recipe {
@@ -47,7 +57,7 @@ contract GameItems is
         uint256[] inputAmounts;
         uint256 outputId;
         uint256 outputAmount;
-        uint256 craftFee;        // burned from input[0] in addition to recipe inputs (governance-tunable)
+        uint256 craftFee; // burned from input[0] in addition to recipe inputs (governance-tunable)
         bool active;
     }
 
@@ -63,9 +73,13 @@ contract GameItems is
     /// @notice Reserved for future state. NEVER reduce below zero — only consume from the top.
     uint256[45] private __gap;
 
-    event RecipeSet(uint256 indexed recipeId, uint256 outputId, uint256 outputAmount, uint256 craftFee);
+    event RecipeSet(
+        uint256 indexed recipeId, uint256 outputId, uint256 outputAmount, uint256 craftFee
+    );
     event RecipeRemoved(uint256 indexed recipeId);
-    event Crafted(address indexed crafter, uint256 indexed recipeId, uint256 outputId, uint256 outputAmount);
+    event Crafted(
+        address indexed crafter, uint256 indexed recipeId, uint256 outputId, uint256 outputAmount
+    );
     event TokenURISet(uint256 indexed id, string uri);
 
     error InvalidRecipe();
@@ -175,11 +189,7 @@ contract GameItems is
 
     /// @notice Burn the inputs, mint the output. Idempotent under invariant testing.
     /// @dev CEI: state changes (burn + craftCount) precede the external mint hook (`onERC1155Received`).
-    function craft(uint256 recipeId, uint256 multiplier)
-        external
-        nonReentrant
-        whenNotPaused
-    {
+    function craft(uint256 recipeId, uint256 multiplier) external nonReentrant whenNotPaused {
         if (multiplier == 0) revert InvalidRecipe();
         Recipe storage r = _recipes[recipeId];
         if (!r.active) revert RecipeInactive();
@@ -216,10 +226,7 @@ contract GameItems is
         return super.uri(id);
     }
 
-    function setTokenURI(uint256 id, string calldata newURI)
-        external
-        onlyRole(CRAFTER_ADMIN_ROLE)
-    {
+    function setTokenURI(uint256 id, string calldata newURI) external onlyRole(CRAFTER_ADMIN_ROLE) {
         _tokenURIs[id] = newURI;
         emit TokenURISet(id, newURI);
     }

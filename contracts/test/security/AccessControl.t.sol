@@ -25,15 +25,19 @@ contract AccessControlTest is Test {
 
     function setUp() public {
         token = new GameToken(admin, admin, 1e24);
-        feed = new MockAggregator(2_000e8, 8);
+        feed = new MockAggregator(2000e8, 8);
         oracle = new PriceOracle(admin);
         oracle.setFeed(address(token), address(feed), 1 hours);
 
         GameItems impl = new GameItems();
-        items = GameItems(address(new ERC1967Proxy(
-            address(impl),
-            abi.encodeCall(GameItems.initialize, (admin, "ipfs://t/{id}.json"))
-        )));
+        items = GameItems(
+            address(
+                new ERC1967Proxy(
+                    address(impl),
+                    abi.encodeCall(GameItems.initialize, (admin, "ipfs://t/{id}.json"))
+                )
+            )
+        );
     }
 
     function test_setFeed_isProtected() public {
@@ -51,10 +55,11 @@ contract AccessControlTest is Test {
     function test_setRecipe_isProtected() public {
         uint256[] memory ids = new uint256[](1);
         uint256[] memory amts = new uint256[](1);
-        ids[0] = 1; amts[0] = 1;
+        ids[0] = 1;
+        amts[0] = 1;
         vm.prank(attacker);
         vm.expectRevert();
-        items.setRecipe(1, ids, amts, 1_000, 1, 0);
+        items.setRecipe(1, ids, amts, 1000, 1, 0);
     }
 
     function test_pause_isProtected() public {

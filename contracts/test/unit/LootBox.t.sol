@@ -19,24 +19,30 @@ contract LootBoxUnitTest is Test {
 
     function setUp() public {
         GameItems impl = new GameItems();
-        items = GameItems(address(new ERC1967Proxy(
-            address(impl),
-            abi.encodeCall(GameItems.initialize, (admin, "ipfs://t/{id}.json"))
-        )));
+        items = GameItems(
+            address(
+                new ERC1967Proxy(
+                    address(impl),
+                    abi.encodeCall(GameItems.initialize, (admin, "ipfs://t/{id}.json"))
+                )
+            )
+        );
         items.grantRole(items.MINTER_ROLE(), admin);
 
         coord = new VRFCoordinatorV2_5Mock();
         subId = coord.createSubscription();
         coord.fundSubscription(subId, 100 ether);
 
-        lootBox = new LootBox(address(coord), bytes32(uint256(1)), subId, IGameItems(address(items)), admin);
+        lootBox = new LootBox(
+            address(coord), bytes32(uint256(1)), subId, IGameItems(address(items)), admin
+        );
         coord.addConsumer(subId, address(lootBox));
 
         items.grantRole(items.MINTER_ROLE(), address(lootBox));
 
         LootBox.Reward[] memory r = new LootBox.Reward[](2);
-        r[0] = LootBox.Reward({itemId: 10, amount: 1, weight: 7_000});
-        r[1] = LootBox.Reward({itemId: 20, amount: 1, weight: 3_000});
+        r[0] = LootBox.Reward({itemId: 10, amount: 1, weight: 7000});
+        r[1] = LootBox.Reward({itemId: 20, amount: 1, weight: 3000});
         lootBox.setRewards(r);
     }
 
@@ -46,7 +52,7 @@ contract LootBoxUnitTest is Test {
 
         // Force the random word.
         uint256[] memory words = new uint256[](1);
-        words[0] = 12345; // pick = 12345 % 10000 = 2345 → first reward
+        words[0] = 12_345; // pick = 12345 % 10000 = 2345 → first reward
         coord.fulfillRandomWordsWithOverride(reqId, address(lootBox), words);
 
         assertEq(items.balanceOf(player, 10), 1);
@@ -102,7 +108,7 @@ contract LootBoxUnitTest is Test {
         vm.prank(player);
         uint256 reqId = lootBox.openLootBox();
         uint256[] memory words = new uint256[](1);
-        words[0] = 9_999; // 9999 % 10000 = 9999 → second reward
+        words[0] = 9999; // 9999 % 10000 = 9999 → second reward
         coord.fulfillRandomWordsWithOverride(reqId, address(lootBox), words);
         assertEq(items.balanceOf(player, 20), 1);
     }

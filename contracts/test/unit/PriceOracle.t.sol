@@ -12,14 +12,14 @@ contract PriceOracleUnitTest is Test {
     address internal admin = address(this);
 
     function setUp() public {
-        feed = new MockAggregator(2_000e8, 8);
+        feed = new MockAggregator(2000e8, 8);
         oracle = new PriceOracle(admin);
         oracle.setFeed(asset, address(feed), 1 hours);
     }
 
     function test_getLatestPrice_scalesTo1e18() public view {
         (uint256 p,) = oracle.getLatestPrice(asset);
-        assertEq(p, 2_000e18);
+        assertEq(p, 2000e18);
     }
 
     function test_getLatestPrice_revertsOnStale() public {
